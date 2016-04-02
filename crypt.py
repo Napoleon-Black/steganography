@@ -1,8 +1,8 @@
 from Crypto.Cipher import AES
+import os
 
 
 class Crypt(object):
-    key = ''
     
     def input(self):
         input_file = open('test.txt', 'r')
@@ -16,15 +16,14 @@ class Crypt(object):
         self.key = user_key
         return user_key
 
-    def file_crypt(self, file_str):
-        encryption_suite = AES.new(self.enter_key(), AES.MODE_CFB, 'gDjeUCjdkjS7^7d#')
+    def file_crypt(self, file_str, save_to, password):
+        print os.path.abspath(os.curdir)
+        encryption_suite = AES.new(password, AES.MODE_CFB, 'gDjeUCjdkjS7^7d#')
         crypted_file = encryption_suite.encrypt(file_str)
-        crypted = open('crypted','w')
+        crypted = open(save_to,'w')
         crypted.write(crypted_file)
         crypted.close()
 
-crypt = Crypt()
-crypt.input()
 
 class Decrypt(object):
 
@@ -46,5 +45,3 @@ class Decrypt(object):
         decrypted.write(decrypted_file)
         decrypted.close()
 
-decrypt = Decrypt()
-decrypt.input()

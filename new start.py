@@ -1,6 +1,7 @@
 from Tkinter import *
 import tkFileDialog
 from PIL import ImageTk, Image
+import crypt
 
 def Quit(ev):
     global root
@@ -10,6 +11,15 @@ def LoadFile(ev):
     fn = tkFileDialog.Open(root, filetypes = [('*.txt files', '.txt')]).show()
     if fn == '':
         return
+    input_file = open(fn, 'r')
+    file_str = input_file.read()
+    return file_str
+
+def SaveFile(ev):
+    fn = tkFileDialog.SaveAs(root).show()
+    if fn == '':
+        return
+    return fn
 
 def LoadImage(ev): 
     fn = tkFileDialog.Open(root, filetypes = [('*.jpg files', '.jpg')]).show()
@@ -17,10 +27,54 @@ def LoadImage(ev):
         return
     
 def Hide(ev):
-    pass
+    password = EnterPassword()
+    print password
+    hide_file = LoadFile(0)
+    save_to = SaveFile(0)
+    crypto = crypt.Crypt()
+    crypto.file_crypt(hide_file, save_to, password)
+    
 
 def Unhide(ev):
     pass
+
+
+def EnterPassword():
+
+    def get_pass():
+        new_password = password.get()
+        if len(new_password) == 16:
+            return new_password
+
+    password_window = Tk()
+    password_window.title('Enter Password')
+    password_window.geometry('250x150')
+
+    passFrame = Frame(password_window)
+    passFrame.pack()
+
+    lab = Label(passFrame, text = 'Enter Key!')
+    lab.grid(row = 0, column = 0, columnspan = 2)
+
+    lab = Label(passFrame, text=' ')
+    lab.grid(row=1, column=0, columnspan = 2)
+
+    v = StringVar()
+    password = Entry(passFrame, textvariable = v, show = '*', width = 10)
+    password.grid(row=2, column=0)
+
+    btpass = Button(passFrame, text = 'Ok', command=get_pass)
+    btpass.grid(row=2, column=1)
+
+    kk = StringVar()
+    lab = Label(passFrame, text=' ', textvariable = kk)
+    lab.grid(row=3, column=0, columnspan = 2)
+
+    btclose = Button(passFrame, text = 'Close', command = lambda : password_window.destroy())
+    btclose.grid(row=4, column=1, sticky='e')
+
+    password_window.mainloop()
+    
 
 root = Tk()
 
