@@ -1,14 +1,16 @@
 from Tkinter import *
 import tkFileDialog
+import threading
 from PIL import ImageTk, Image
 import crypt
 
 def Quit(ev):
     global root
+    root.quit()
     root.destroy()
     
 def LoadFile(ev): 
-    fn = tkFileDialog.Open(root, filetypes = [('*.txt files', '.txt')]).show()
+    fn = tkFileDialog.Open(root).show()
     if fn == '':
         return
     input_file = open(fn, 'r')
@@ -27,26 +29,33 @@ def LoadImage(ev):
         return
     
 def Hide(ev):
-    password = EnterPassword()
-    print password
     hide_file = LoadFile(0)
+    EnterPassword()
+    password = pwd
     save_to = SaveFile(0)
     crypto = crypt.Crypt()
     crypto.file_crypt(hide_file, save_to, password)
     
 
 def Unhide(ev):
-    pass
+    crypt_file = LoadFile(0)
+    EnterPassword()
+    password = pwd
+    save_to = SaveFile(0)
+    decrypt = crypt.Decrypt()
+    decrypt.file_decrypt(crypt_file, password, save_to)
 
+pwd = None
 
 def EnterPassword():
-
-    def get_pass():
-        new_password = password.get()
-        if len(new_password) == 16:
-            return new_password
-
     password_window = Tk()
+    def get_pass():
+        global pwd 
+        if len(password.get()) == 16:
+            pwd = password.get()
+            password_window.quit()
+            password_window.destroy()
+    
     password_window.title('Enter Password')
     password_window.geometry('250x150')
 
