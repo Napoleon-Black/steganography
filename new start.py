@@ -27,8 +27,8 @@ def LoadImage(ev):
         return
     
 def Hide(ev):
-    password = EnterPassword()
-    print password
+    EnterPassword()
+    password = ent_password
     hide_file = LoadFile(0)
     save_to = SaveFile(0)
     crypto = crypt.Crypt()
@@ -38,13 +38,15 @@ def Hide(ev):
 def Unhide(ev):
     pass
 
+ent_password = None
 
 def EnterPassword():
 
     def get_pass():
-        new_password = password.get()
-        if len(new_password) == 16:
-            return new_password
+        global ent_password
+        if len(password.get()) == 16:
+            ent_password = password.get()
+            password_window.destroy()
 
     password_window = Tk()
     password_window.title('Enter Password')
