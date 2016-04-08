@@ -17,6 +17,12 @@ def LoadFile(ev):
     file_str = input_file.read()
     return file_str
 
+def SaveImage(ev):
+    fn = tkFileDialog.SaveAs(root, filetypes = [('*.png files', '.png')]).show()
+    if fn == '':
+        return
+    return fn
+
 def SaveFile(ev):
     fn = tkFileDialog.SaveAs(root).show()
     if fn == '':
@@ -24,21 +30,23 @@ def SaveFile(ev):
     return fn
 
 def LoadImage(ev): 
-    fn = tkFileDialog.Open(root, filetypes = [('*.jpg files', '.jpg')]).show()
+    fn = tkFileDialog.Open(root, filetypes = [('*.png files', '.png')]).show()
     if fn == '':
         return
+    return fn
     
 def Hide(ev):
     hide_file = LoadFile(0)
     EnterPassword()
+    set_image = LoadImage(0)
     password = pwd
-    save_to = SaveFile(0)
+    save_to = SaveImage(0)
     crypto = crypt.Crypt()
-    crypto.file_crypt(hide_file, save_to, password)
+    crypto.file_crypt(hide_file, set_image, save_to, password)
     
 
 def Unhide(ev):
-    crypt_file = LoadFile(0)
+    crypt_file = LoadImage(0)
     EnterPassword()
     password = pwd
     save_to = SaveFile(0)

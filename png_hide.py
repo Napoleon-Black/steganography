@@ -5,12 +5,9 @@ from itertools import product
 
 class HideMessage(object):
 
-    def bin_message(self,):
-        print (message)
+    def bin_message(self, message):
         messagelen = len(message)
-        print (messagelen)
         binlen = bin(messagelen)[2:]
-        print (binlen)
         if len(binlen) < 8:
             binlen = '0' * (8 - len(binlen)) + binlen
         
@@ -26,7 +23,7 @@ class HideMessage(object):
         return ''.join(binmessage)
 
     def hide_message(self, message, imagefile, outfile):
-        binmessage = bin_message(message)
+        binmessage = self.bin_message(message)
         image = Image.open(imagefile)
         pix = image.load()
         sizex, sizey = image.size

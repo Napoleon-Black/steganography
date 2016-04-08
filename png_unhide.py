@@ -31,7 +31,3 @@ class UnhideMessage(object):
             message.append(chr(part))
         
         return ''.join(message)
-
-unhide = UnhideMessage()
-a = unhide.unhide_message('hide_image.png')
-print a
