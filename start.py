@@ -22,6 +22,8 @@ class Ui_MainWindow(object):
 
     def __init__(self):
         self.combobox_choice = '*.PNG'
+        self.combobox_choice2 = '*.PNG'
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
@@ -46,11 +48,11 @@ class Ui_MainWindow(object):
         self.hide_tab.setObjectName(_fromUtf8("hide_tab"))
 
         self.image_type = QtGui.QLabel(self.hide_tab)
-        self.image_type.setGeometry(QtCore.QRect(30, 30, 61, 21))
+        self.image_type.setGeometry(QtCore.QRect(35, 30, 81, 21))
         self.image_type.setObjectName(_fromUtf8("image_type"))
 
         self.comboBox = QtGui.QComboBox(self.hide_tab)
-        self.comboBox.setGeometry(QtCore.QRect(118, 30, 111, 22))
+        self.comboBox.setGeometry(QtCore.QRect(130, 30, 120, 22))
         self.comboBox.setObjectName(_fromUtf8("comboBox"))
         self.comboBox.addItem(_fromUtf8(""))
         self.comboBox.addItem(_fromUtf8(""))
@@ -58,66 +60,66 @@ class Ui_MainWindow(object):
         self.comboBox.activated[str].connect(self.onActivated)
 
         self.use_aes = QtGui.QLabel(self.hide_tab)
-        self.use_aes.setGeometry(QtCore.QRect(12, 70, 81, 21))
+        self.use_aes.setGeometry(QtCore.QRect(10, 70, 106, 21))
         self.use_aes.setObjectName(_fromUtf8("use_aes"))
         
         self.checkBox = QtGui.QCheckBox(self.hide_tab)
-        self.checkBox.setGeometry(QtCore.QRect(120, 70, 21, 21))
+        self.checkBox.setGeometry(QtCore.QRect(130, 70, 21, 21))
         self.checkBox.setText(_fromUtf8(""))
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
         self.checkBox.stateChanged.connect(self.change_encrypt_status)
 
         self.password = QtGui.QLineEdit(self.hide_tab)
-        self.password.setGeometry(QtCore.QRect(120, 110, 113, 20))
+        self.password.setGeometry(QtCore.QRect(130, 110, 120, 22))
         self.password.setEchoMode(QtGui.QLineEdit.Password)
         self.password.setMaxLength(16)
         self.password.setReadOnly(True)
         self.password.setObjectName(_fromUtf8("password"))
         self.password.textChanged[str].connect(self.get_pass)
         self.password_label = QtGui.QLabel(self.hide_tab)
-        self.password_label.setGeometry(QtCore.QRect(39, 110, 51, 21))
+        self.password_label.setGeometry(QtCore.QRect(48, 110, 71, 21))
         self.password_label.setObjectName(_fromUtf8("password_label"))
 
         self.label = QtGui.QLabel(self.hide_tab)
-        self.label.setGeometry(QtCore.QRect(36, 150, 61, 21))
+        self.label.setGeometry(QtCore.QRect(45, 150, 81, 21))
         self.label.setObjectName(_fromUtf8("label"))
 
         self.lineEdit = QtGui.QLineEdit(self.hide_tab)
-        self.lineEdit.setGeometry(QtCore.QRect(120, 150, 113, 20))
+        self.lineEdit.setGeometry(QtCore.QRect(130, 150, 170, 20))
         self.lineEdit.setReadOnly(True)
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
 
         self.pushButton = QtGui.QPushButton(self.hide_tab)
-        self.pushButton.setGeometry(QtCore.QRect(250, 149, 75, 23))
+        self.pushButton.setGeometry(QtCore.QRect(310, 149, 75, 23))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.pushButton.clicked.connect(self.open_image)
 
         self.label_2 = QtGui.QLabel(self.hide_tab)
-        self.label_2.setGeometry(QtCore.QRect(50, 190, 41, 16))
+        self.label_2.setGeometry(QtCore.QRect(62, 190, 61, 16))
         self.label_2.setObjectName(_fromUtf8("label_2"))
 
         self.lineEdit_2 = QtGui.QLineEdit(self.hide_tab)
-        self.lineEdit_2.setGeometry(QtCore.QRect(120, 190, 113, 20))
+        self.lineEdit_2.setGeometry(QtCore.QRect(130, 190, 170, 20))
         self.lineEdit_2.setReadOnly(True)
         self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
 
         self.pushButton_2 = QtGui.QPushButton(self.hide_tab)
-        self.pushButton_2.setGeometry(QtCore.QRect(250, 190, 75, 23))
+        self.pushButton_2.setGeometry(QtCore.QRect(310, 190, 75, 23))
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         self.pushButton_2.clicked.connect(self.open_file)
 
         self.label_3 = QtGui.QLabel(self.hide_tab)
-        self.label_3.setGeometry(QtCore.QRect(48, 230, 41, 21))
+        self.label_3.setGeometry(QtCore.QRect(62, 230, 61, 21))
         self.label_3.setObjectName(_fromUtf8("label_3"))
 
         self.lineEdit_3 = QtGui.QLineEdit(self.hide_tab)
-        self.lineEdit_3.setGeometry(QtCore.QRect(120, 230, 113, 20))
+        self.lineEdit_3.setGeometry(QtCore.QRect(130, 230, 170, 20))
         self.lineEdit_3.setText(_fromUtf8(""))
         self.lineEdit_3.setReadOnly(True)
         self.lineEdit_3.setObjectName(_fromUtf8("lineEdit_3"))
 
         self.pushButton_3 = QtGui.QPushButton(self.hide_tab)
-        self.pushButton_3.setGeometry(QtCore.QRect(250, 230, 75, 23))
+        self.pushButton_3.setGeometry(QtCore.QRect(310, 230, 75, 23))
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
         self.pushButton_3.clicked.connect(self.image_save_as)
 
@@ -133,72 +135,72 @@ class Ui_MainWindow(object):
         self.unhide_tab.setObjectName(_fromUtf8("unhide_tab"))
 
         self.image_type_2 = QtGui.QLabel(self.unhide_tab)
-        self.image_type_2.setGeometry(QtCore.QRect(30, 30, 61, 21))
+        self.image_type_2.setGeometry(QtCore.QRect(35, 30, 81, 21))
         self.image_type_2.setObjectName(_fromUtf8("image_type_2"))
 
         self.comboBox_2 = QtGui.QComboBox(self.unhide_tab)
-        self.comboBox_2.setGeometry(QtCore.QRect(118, 30, 111, 22))
+        self.comboBox_2.setGeometry(QtCore.QRect(130, 30, 120, 22))
         self.comboBox_2.setObjectName(_fromUtf8("comboBox_2"))
         self.comboBox_2.addItem(_fromUtf8(""))
         self.comboBox_2.addItem(_fromUtf8(""))
         self.comboBox_2.addItem(_fromUtf8(""))
-        self.comboBox.activated[str].connect(self.onActivated2)
+        self.comboBox_2.activated[str].connect(self.onActivated2)
 
         self.use_aes_2 = QtGui.QLabel(self.unhide_tab)
-        self.use_aes_2.setGeometry(QtCore.QRect(12, 70, 81, 21))
+        self.use_aes_2.setGeometry(QtCore.QRect(10, 70, 106, 21))
         self.use_aes_2.setObjectName(_fromUtf8("use_aes_2"))
 
         self.checkBox_2 = QtGui.QCheckBox(self.unhide_tab)
-        self.checkBox_2.setGeometry(QtCore.QRect(120, 70, 21, 21))
+        self.checkBox_2.setGeometry(QtCore.QRect(130, 70, 21, 21))
         self.checkBox_2.setText(_fromUtf8(""))
         self.checkBox_2.setObjectName(_fromUtf8("checkBox_2"))
-        self.checkBox.stateChanged.connect(self.change_encrypt_status2)
+        self.checkBox_2.stateChanged.connect(self.change_encrypt_status2)
 
         self.password_label_2 = QtGui.QLabel(self.unhide_tab)
-        self.password_label_2.setGeometry(QtCore.QRect(39, 110, 51, 21))
+        self.password_label_2.setGeometry(QtCore.QRect(48, 110, 71, 21))
         self.password_label_2.setObjectName(_fromUtf8("password_label_2"))
         
         self.password_2 = QtGui.QLineEdit(self.unhide_tab)
-        self.password_2.setGeometry(QtCore.QRect(120, 110, 113, 20))
-        self.password_2.setEchoMode(QtGui.QLineEdit.Normal)
+        self.password_2.setGeometry(QtCore.QRect(130, 110, 120, 22))
+        self.password_2.setEchoMode(QtGui.QLineEdit.Password)
         self.password_2.setReadOnly(True)
         self.password_2.setMaxLength(16)
         self.password_2.setObjectName(_fromUtf8("password_2"))
-        self.password.textChanged[str].connect(self.get_pass2)
+        self.password_2.textChanged[str].connect(self.get_pass2)
 
         self.label_5 = QtGui.QLabel(self.unhide_tab)
-        self.label_5.setGeometry(QtCore.QRect(36, 150, 61, 21))
+        self.label_5.setGeometry(QtCore.QRect(45, 150, 81, 21))
         self.label_5.setObjectName(_fromUtf8("label_5"))
 
         self.lineEdit_4 = QtGui.QLineEdit(self.unhide_tab)
-        self.lineEdit_4.setGeometry(QtCore.QRect(120, 150, 113, 20))
+        self.lineEdit_4.setGeometry(QtCore.QRect(130, 150, 170, 20))
         self.lineEdit_4.setReadOnly(True)
         self.lineEdit_4.setObjectName(_fromUtf8("lineEdit_4"))
 
         self.pushButton_4 = QtGui.QPushButton(self.unhide_tab)
-        self.pushButton_4.setGeometry(QtCore.QRect(250, 149, 75, 23))
+        self.pushButton_4.setGeometry(QtCore.QRect(310, 149, 75, 23))
         self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
-        self.pushButton.clicked.connect(self.open_image2)
+        self.pushButton_4.clicked.connect(self.open_image2)
 
         self.label_6 = QtGui.QLabel(self.unhide_tab)
-        self.label_6.setGeometry(QtCore.QRect(48, 190, 41, 21))
+        self.label_6.setGeometry(QtCore.QRect(62, 190, 61, 21))
         self.label_6.setObjectName(_fromUtf8("label_6"))
 
         self.lineEdit_5 = QtGui.QLineEdit(self.unhide_tab)
-        self.lineEdit_5.setGeometry(QtCore.QRect(120, 190, 113, 20))
+        self.lineEdit_5.setGeometry(QtCore.QRect(130, 190, 170, 20))
         self.lineEdit_5.setText(_fromUtf8(""))
         self.lineEdit_5.setReadOnly(True)
         self.lineEdit_5.setObjectName(_fromUtf8("lineEdit_5"))
 
         self.pushButton_5 = QtGui.QPushButton(self.unhide_tab)
-        self.pushButton_5.setGeometry(QtCore.QRect(250, 190, 75, 23))
+        self.pushButton_5.setGeometry(QtCore.QRect(310, 190, 75, 23))
         self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
-        self.pushButton.clicked.connect(self.file_save_as)
+        self.pushButton_5.clicked.connect(self.file_save_as)
 
         self.commandLinkButton_2 = QtGui.QCommandLinkButton(self.unhide_tab)
         self.commandLinkButton_2.setGeometry(QtCore.QRect(220, 240, 101, 41))
         self.commandLinkButton_2.setObjectName(_fromUtf8("commandLinkButton_2"))
-        self.commandLinkButton.clicked.connect(self.unhide)
+        self.commandLinkButton_2.clicked.connect(self.unhide)
 
         self.tabWidget.addTab(self.unhide_tab, _fromUtf8(""))
 
@@ -304,18 +306,22 @@ class Ui_MainWindow(object):
             file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'BMP Files (*.bmp)')
         self.image_container = str(file)
+        self.lineEdit.setText(self.image_container)
 
     def open_file(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Text Files (*.txt)')
+        self.open_file_adress = str(file)
         selected_file = open(str(file), 'r')
         self.selected_file_str = selected_file.read()
+        self.lineEdit_2.setText(self.open_file_adress)
         
 
     def image_save_as(self):
         filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
                 '/home', 'PNG Files (*.png)')
         self.new_image_file = str(filename) + '.png'
+        self.lineEdit_3.setText(self.new_image_file)
 
     def onActivated(self, choice):
         self.combobox_choice = choice
@@ -330,7 +336,11 @@ class Ui_MainWindow(object):
         hide_file = self.selected_file_str
         set_image = self.image_container
         save_to = self.new_image_file
+
+        while len(self.new_password) != 16:
+            self.new_password += '^'
         password = self.new_password
+
         crypto = crypt.Crypt()
         crypto.file_crypt(hide_file, set_image, save_to, password)
 
@@ -351,6 +361,7 @@ class Ui_MainWindow(object):
             file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'BMP Files (*.bmp)')
         self.image_container2 = str(file)
+        self.lineEdit_4.setText(self.image_container2)
 
     def onActivated2(self, choice):
         self.combobox_choice2 = choice
@@ -368,11 +379,16 @@ class Ui_MainWindow(object):
         filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
                 '/home', 'Text Files (*.txt)')
         self.new_image_file2 = str(filename) + '.txt'
+        self.lineEdit_5.setText(self.new_image_file2)
 
     def unhide(self):
-        crypt_file = self.open_image2
+        crypt_file = self.image_container2
+
+        while len(self.new_password2) != 16:
+            self.new_password2 += '^'
         password = self.new_password2
-        save_to = self.file_save_as
+
+        save_to = self.new_image_file2
         decrypt = crypt.Decrypt()
         decrypt.file_decrypt(crypt_file, password, save_to)
         

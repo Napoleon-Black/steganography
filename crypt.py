@@ -16,6 +16,7 @@ class Crypt(object):
 class Decrypt(object):
 
     def file_decrypt(self, image_file, password, save_to):
+        
         import png_unhide
         unhide = png_unhide.UnhideMessage()
         unhided_file = unhide.unhide_message(image_file)
