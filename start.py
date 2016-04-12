@@ -41,6 +41,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setMaximumSize(QtCore.QSize(400, 380))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
 
+        #Tab_1 Code  (Hide tab)
         self.hide_tab = QtGui.QWidget()
         self.hide_tab.setObjectName(_fromUtf8("hide_tab"))
 
@@ -60,7 +61,6 @@ class Ui_MainWindow(object):
         self.use_aes.setGeometry(QtCore.QRect(12, 70, 81, 21))
         self.use_aes.setObjectName(_fromUtf8("use_aes"))
         
-
         self.checkBox = QtGui.QCheckBox(self.hide_tab)
         self.checkBox.setGeometry(QtCore.QRect(120, 70, 21, 21))
         self.checkBox.setText(_fromUtf8(""))
@@ -77,7 +77,6 @@ class Ui_MainWindow(object):
         self.password_label = QtGui.QLabel(self.hide_tab)
         self.password_label.setGeometry(QtCore.QRect(39, 110, 51, 21))
         self.password_label.setObjectName(_fromUtf8("password_label"))
-
 
         self.label = QtGui.QLabel(self.hide_tab)
         self.label.setGeometry(QtCore.QRect(36, 150, 61, 21))
@@ -129,6 +128,7 @@ class Ui_MainWindow(object):
 
         self.tabWidget.addTab(self.hide_tab, _fromUtf8(""))
 
+        #Tab_2 Code  (Unhide tab)
         self.unhide_tab = QtGui.QWidget()
         self.unhide_tab.setObjectName(_fromUtf8("unhide_tab"))
 
@@ -136,33 +136,35 @@ class Ui_MainWindow(object):
         self.image_type_2.setGeometry(QtCore.QRect(30, 30, 61, 21))
         self.image_type_2.setObjectName(_fromUtf8("image_type_2"))
 
-
         self.comboBox_2 = QtGui.QComboBox(self.unhide_tab)
         self.comboBox_2.setGeometry(QtCore.QRect(118, 30, 111, 22))
         self.comboBox_2.setObjectName(_fromUtf8("comboBox_2"))
         self.comboBox_2.addItem(_fromUtf8(""))
         self.comboBox_2.addItem(_fromUtf8(""))
         self.comboBox_2.addItem(_fromUtf8(""))
+        self.comboBox.activated[str].connect(self.onActivated2)
 
         self.use_aes_2 = QtGui.QLabel(self.unhide_tab)
         self.use_aes_2.setGeometry(QtCore.QRect(12, 70, 81, 21))
         self.use_aes_2.setObjectName(_fromUtf8("use_aes_2"))
 
-
         self.checkBox_2 = QtGui.QCheckBox(self.unhide_tab)
         self.checkBox_2.setGeometry(QtCore.QRect(120, 70, 21, 21))
         self.checkBox_2.setText(_fromUtf8(""))
         self.checkBox_2.setObjectName(_fromUtf8("checkBox_2"))
+        self.checkBox.stateChanged.connect(self.change_encrypt_status2)
 
         self.password_label_2 = QtGui.QLabel(self.unhide_tab)
         self.password_label_2.setGeometry(QtCore.QRect(39, 110, 51, 21))
         self.password_label_2.setObjectName(_fromUtf8("password_label_2"))
-
+        
         self.password_2 = QtGui.QLineEdit(self.unhide_tab)
         self.password_2.setGeometry(QtCore.QRect(120, 110, 113, 20))
         self.password_2.setEchoMode(QtGui.QLineEdit.Normal)
         self.password_2.setReadOnly(True)
+        self.password_2.setMaxLength(16)
         self.password_2.setObjectName(_fromUtf8("password_2"))
+        self.password.textChanged[str].connect(self.get_pass2)
 
         self.label_5 = QtGui.QLabel(self.unhide_tab)
         self.label_5.setGeometry(QtCore.QRect(36, 150, 61, 21))
@@ -176,6 +178,7 @@ class Ui_MainWindow(object):
         self.pushButton_4 = QtGui.QPushButton(self.unhide_tab)
         self.pushButton_4.setGeometry(QtCore.QRect(250, 149, 75, 23))
         self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.pushButton.clicked.connect(self.open_image2)
 
         self.label_6 = QtGui.QLabel(self.unhide_tab)
         self.label_6.setGeometry(QtCore.QRect(48, 190, 41, 21))
@@ -190,10 +193,12 @@ class Ui_MainWindow(object):
         self.pushButton_5 = QtGui.QPushButton(self.unhide_tab)
         self.pushButton_5.setGeometry(QtCore.QRect(250, 190, 75, 23))
         self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
+        self.pushButton.clicked.connect(self.file_save_as)
 
         self.commandLinkButton_2 = QtGui.QCommandLinkButton(self.unhide_tab)
         self.commandLinkButton_2.setGeometry(QtCore.QRect(220, 240, 101, 41))
         self.commandLinkButton_2.setObjectName(_fromUtf8("commandLinkButton_2"))
+        self.commandLinkButton.clicked.connect(self.unhide)
 
         self.tabWidget.addTab(self.unhide_tab, _fromUtf8(""))
 
@@ -287,7 +292,7 @@ class Ui_MainWindow(object):
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
 
-
+    # Tab_1 Defs (Hide Tab defs)
     def open_image(self):
         if self.combobox_choice == '*.PNG':
             file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
@@ -332,6 +337,45 @@ class Ui_MainWindow(object):
     def get_pass(self, password):
         self.new_password = str(password)
 
+
+    #Tab_2 Defs (Unhide Tab defs)
+
+    def open_image2(self):
+        if self.combobox_choice2 == '*.PNG':
+            file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
+                '/home', 'PNG Files (*.png)')
+        elif self.combobox_choice2 == '*.JPG':
+            file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
+                '/home', 'JPG Files (*.jpg)')
+        elif self.combobox_choice2 == '*.BMP':
+            file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
+                '/home', 'BMP Files (*.bmp)')
+        self.image_container2 = str(file)
+
+    def onActivated2(self, choice):
+        self.combobox_choice2 = choice
+
+    def change_encrypt_status2(self, state):
+        if state != QtCore.Qt.Checked:
+            self.password_2.setReadOnly(True)
+        else:
+            self.password_2.setReadOnly(False)
+
+    def get_pass2(self, password):
+        self.new_password2 = str(password)
+
+    def file_save_as(self):
+        filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
+                '/home', 'Text Files (*.txt)')
+        self.new_image_file2 = str(filename) + '.txt'
+
+    def unhide(self):
+        crypt_file = self.open_image2
+        password = self.new_password2
+        save_to = self.file_save_as
+        decrypt = crypt.Decrypt()
+        decrypt.file_decrypt(crypt_file, password, save_to)
+        
 
 if __name__ == "__main__":
     import sys
