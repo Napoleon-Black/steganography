@@ -231,12 +231,20 @@ class Ui_MainWindow(object):
 
         self.actionHide = QtGui.QAction(MainWindow)
         self.actionHide.setObjectName(_fromUtf8("actionHide"))
+        self.actionHide.setShortcut('Ctrl+H')
+        self.actionHide.triggered.connect(lambda x: self.tabWidget.setCurrentIndex(0))
 
         self.actionUnhide = QtGui.QAction(MainWindow)
         self.actionUnhide.setObjectName(_fromUtf8("actionUnhide"))
+        self.actionUnhide.setShortcut('Ctrl+U')
+        self.actionUnhide.triggered.connect(lambda x: self.tabWidget.setCurrentIndex(1))
 
         self.actionExit = QtGui.QAction(MainWindow)
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
+        self.actionExit.setShortcut('Ctrl+Q')
+        self.actionExit.setStatusTip('Exit application')
+        self.actionExit.triggered.connect(lambda x: app.quit())
+        
 
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
@@ -412,7 +420,7 @@ class Ui_MainWindow(object):
             unhiden.write(unhiden_file)
             unhiden.close()
 
-        
+
 
 if __name__ == "__main__":
     import sys
