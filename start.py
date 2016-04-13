@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys, crypt
+import sys, crypt, png_hide, png_unhide
 from PIL import ImageTk, Image
 from PyQt4 import QtCore, QtGui
 
@@ -23,6 +23,8 @@ class Ui_MainWindow(object):
     def __init__(self):
         self.combobox_choice = '*.PNG'
         self.combobox_choice2 = '*.PNG'
+        self.aes_status = False
+        self.aes_status2 = False
 
 
     def setupUi(self, MainWindow):
@@ -329,20 +331,29 @@ class Ui_MainWindow(object):
     def change_encrypt_status(self, state):
         if state != QtCore.Qt.Checked:
             self.password.setReadOnly(True)
+            self.aes_status = True
         else:
             self.password.setReadOnly(False)
+            self.aes_status = False
 
     def hide(self):
-        hide_file = self.selected_file_str
-        set_image = self.image_container
-        save_to = self.new_image_file
+        if self.aes_status == True:
+            hide_file = self.selected_file_str
+            set_image = self.image_container
+            save_to = self.new_image_file
 
-        while len(self.new_password) != 16:
-            self.new_password += '^'
-        password = self.new_password
+            while len(self.new_password) != 16:
+                self.new_password += '^'
+            password = self.new_password
 
-        crypto = crypt.Crypt()
-        crypto.file_crypt(hide_file, set_image, save_to, password)
+            crypto = crypt.Crypt()
+            crypto.file_crypt(hide_file, set_image, save_to, password)
+        else:
+            hide_file = self.selected_file_str
+            set_image = self.image_container
+            save_to = self.new_image_file
+            pnghide = png_hide.HideMessage()
+            pnghide.hide_message(hide_file, set_image, save_to)
 
     def get_pass(self, password):
         self.new_password = str(password)
@@ -382,15 +393,25 @@ class Ui_MainWindow(object):
         self.lineEdit_5.setText(self.new_image_file2)
 
     def unhide(self):
-        crypt_file = self.image_container2
+        if self.aes_status2 == True:
+            crypt_file = self.image_container2
 
-        while len(self.new_password2) != 16:
-            self.new_password2 += '^'
-        password = self.new_password2
+            while len(self.new_password2) != 16:
+                self.new_password2 += '^'
+            password = self.new_password2
 
-        save_to = self.new_image_file2
-        decrypt = crypt.Decrypt()
-        decrypt.file_decrypt(crypt_file, password, save_to)
+            save_to = self.new_image_file2
+            decrypt = crypt.Decrypt()
+            decrypt.file_decrypt(crypt_file, password, save_to)
+        else:
+            hiden_file = self.image_container2
+            save_to = self.new_image_file2
+            pngunhide = png_unhide.UnhideMessage()
+            unhiden_file = pngunhide.unhide_message(hiden_file)
+            unhiden = open(save_to, 'w')
+            unhiden.write(unhiden_file)
+            unhiden.close()
+
         
 
 if __name__ == "__main__":
