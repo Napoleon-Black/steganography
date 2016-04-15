@@ -358,11 +358,11 @@ class Ui_MainWindow(object):
         self.combobox_choice = choice
 
     def change_encrypt_status(self, state):
-        if state != QtCore.Qt.Checked:
-            self.password.setReadOnly(True)
+        if state == QtCore.Qt.Checked:
+            self.password.setReadOnly(False)
             self.aes_status = True
         else:
-            self.password.setReadOnly(False)
+            self.password.setReadOnly(True)
             self.aes_status = False
 
     def hide(self):
@@ -370,6 +370,7 @@ class Ui_MainWindow(object):
             hide_file = self.selected_file_str
             set_image = self.image_container
             save_to = self.new_image_file
+            password = self.new_password
             crypto = crypt.Crypt()
             crypto.file_crypt(hide_file, set_image, save_to, password)
         else:
@@ -378,6 +379,7 @@ class Ui_MainWindow(object):
             save_to = self.new_image_file
             pnghide = png_hide.HideMessage()
             pnghide.hide_message(hide_file, set_image, save_to)
+        self.hide_complited()
 
     def get_pass(self, password):
         self.new_password = str(password)
@@ -402,10 +404,12 @@ class Ui_MainWindow(object):
         self.combobox_choice2 = choice
 
     def change_encrypt_status2(self, state):
-        if state != QtCore.Qt.Checked:
-            self.password_2.setReadOnly(True)
-        else:
+        if state == QtCore.Qt.Checked:
             self.password_2.setReadOnly(False)
+            self.aes_status2 = True
+        else:
+            self.password_2.setReadOnly(True)
+            self.aes_status2 = False
 
     def get_pass2(self, password):
         self.new_password2 = str(password)
@@ -420,6 +424,7 @@ class Ui_MainWindow(object):
         if self.aes_status2 == True:
             crypt_file = self.image_container2
             save_to = self.new_image_file2
+            password = self.new_password2
             decrypt = crypt.Decrypt()
             decrypt.file_decrypt(crypt_file, password, save_to)
         else:
@@ -430,6 +435,7 @@ class Ui_MainWindow(object):
             unhiden = open(save_to, 'w')
             unhiden.write(unhiden_file)
             unhiden.close()
+        self.unhide_complited()
 
     #About program
     def show_about(self):
@@ -448,6 +454,23 @@ class Ui_MainWindow(object):
         width = ( resolution.width() - my_size.width() ) / 2
         height = ( resolution.height() - my_size.height() ) / 2
         MainWindow.move(width, height)
+
+    #Hide Complited Message
+    def hide_complited(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Complited!")
+        msgBox.setIcon(QtGui.QMessageBox.Information)
+        msgBox.setText('Hiding data complited')
+        msgBox.exec_()
+
+    #Unhide Complited Message
+    def unhide_complited(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Complited!")
+        msgBox.setIcon(QtGui.QMessageBox.Information)
+        msgBox.setText('Unhiding data complited')
+        msgBox.exec_()
+        
         
 
 
