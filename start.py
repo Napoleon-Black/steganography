@@ -370,11 +370,6 @@ class Ui_MainWindow(object):
             hide_file = self.selected_file_str
             set_image = self.image_container
             save_to = self.new_image_file
-
-            while len(self.new_password) != 16:
-                self.new_password += '^'
-            password = self.new_password
-
             crypto = crypt.Crypt()
             crypto.file_crypt(hide_file, set_image, save_to, password)
         else:
@@ -389,7 +384,7 @@ class Ui_MainWindow(object):
 
 
     #Tab_2 Defs (Unhide Tab defs)
-
+    #open image
     def open_image2(self):
         if self.combobox_choice2 == '*.PNG':
             file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
@@ -424,11 +419,6 @@ class Ui_MainWindow(object):
     def unhide(self):
         if self.aes_status2 == True:
             crypt_file = self.image_container2
-
-            while len(self.new_password2) != 16:
-                self.new_password2 += '^'
-            password = self.new_password2
-
             save_to = self.new_image_file2
             decrypt = crypt.Decrypt()
             decrypt.file_decrypt(crypt_file, password, save_to)
