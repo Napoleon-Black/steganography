@@ -28,24 +28,29 @@ class Ui_MainWindow(object):
 
 
     def setupUi(self, MainWindow):
+
+        #initialize Main Window
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(400, 421)
         MainWindow.setMinimumSize(QtCore.QSize(400, 421))
         MainWindow.setMaximumSize(QtCore.QSize(400, 421))
         MainWindow.setBaseSize(QtCore.QSize(400, 350))
+        self.center_window()
 
+        #add central widget
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setMinimumSize(QtCore.QSize(400, 380))
         self.centralwidget.setMaximumSize(QtCore.QSize(400, 380))
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
 
+        #add tab widget
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 400, 380))
         self.tabWidget.setMinimumSize(QtCore.QSize(400, 380))
         self.tabWidget.setMaximumSize(QtCore.QSize(400, 380))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
 
-        #Tab_1 Code  (Hide tab)
+        #initialize first tab(Hide tab)
         self.hide_tab = QtGui.QWidget()
         self.hide_tab.setObjectName(_fromUtf8("hide_tab"))
 
@@ -232,12 +237,14 @@ class Ui_MainWindow(object):
         self.actionHide = QtGui.QAction(MainWindow)
         self.actionHide.setObjectName(_fromUtf8("actionHide"))
         self.actionHide.setShortcut('Ctrl+H')
-        self.actionHide.triggered.connect(lambda x: self.tabWidget.setCurrentIndex(0))
+        self.actionHide.triggered.connect(lambda x: self.tabWidget.\
+                                          setCurrentIndex(0))
 
         self.actionUnhide = QtGui.QAction(MainWindow)
         self.actionUnhide.setObjectName(_fromUtf8("actionUnhide"))
         self.actionUnhide.setShortcut('Ctrl+U')
-        self.actionUnhide.triggered.connect(lambda x: self.tabWidget.setCurrentIndex(1))
+        self.actionUnhide.triggered.connect(lambda x: self.tabWidget.\
+                                            setCurrentIndex(1))
 
         self.actionExit = QtGui.QAction(MainWindow)
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
@@ -248,6 +255,7 @@ class Ui_MainWindow(object):
 
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
+        self.actionAbout.triggered.connect(self.show_about)
 
         self.menuMenu.addAction(self.actionHide)
         self.menuMenu.addAction(self.actionUnhide)
@@ -261,6 +269,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    #translation
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "StegSystem", None))
         self.image_type.setText(_translate("MainWindow", "Image type:", None))
@@ -268,34 +277,46 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(1, _translate("MainWindow", "*.JPG", None))
         self.comboBox.setItemText(2, _translate("MainWindow", "*.BMP", None))
         self.use_aes.setText(_translate("MainWindow", "AES Encryption:", None))
-        self.password.setPlaceholderText(_translate("MainWindow", "Enter password", None))
+        self.password.setPlaceholderText(_translate("MainWindow", 
+                                         "Enter password", None))
         self.password_label.setText(_translate("MainWindow", "Password:", None))
         self.label.setText(_translate("MainWindow", "Set Image:", None))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Image dir", None))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", 
+                                        "Image dir", None))
         self.pushButton.setText(_translate("MainWindow", "Select", None))
         self.label_2.setText(_translate("MainWindow", "Set File:", None))
-        self.lineEdit_2.setPlaceholderText(_translate("MainWindow", "Set file to hide", None))
+        self.lineEdit_2.setPlaceholderText(_translate("MainWindow", 
+                                            "Set file to hide", None))
         self.pushButton_2.setText(_translate("MainWindow", "Select", None))
         self.label_3.setText(_translate("MainWindow", "Save to:", None))
-        self.lineEdit_3.setPlaceholderText(_translate("MainWindow", "Save new image to", None))
+        self.lineEdit_3.setPlaceholderText(_translate("MainWindow", 
+                                            "Save new image to", None))
         self.pushButton_3.setText(_translate("MainWindow", "Select", None))
         self.commandLinkButton.setText(_translate("MainWindow", "Hide!", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.hide_tab), _translate("MainWindow", "Hide", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.hide_tab), 
+                                  _translate("MainWindow", "Hide", None))
         self.image_type_2.setText(_translate("MainWindow", "Image type:", None))
         self.comboBox_2.setItemText(0, _translate("MainWindow", "*.PNG", None))
         self.comboBox_2.setItemText(1, _translate("MainWindow", "*.JPG", None))
         self.comboBox_2.setItemText(2, _translate("MainWindow", "*.BMP", None))
-        self.use_aes_2.setText(_translate("MainWindow", "AES Encryption:", None))
-        self.password_label_2.setText(_translate("MainWindow", "Password:", None))
-        self.password_2.setPlaceholderText(_translate("MainWindow", "Enter password", None))
+        self.use_aes_2.setText(_translate("MainWindow", "AES Encryption:", 
+                                            None))
+        self.password_label_2.setText(_translate("MainWindow", "Password:", 
+                                            None))
+        self.password_2.setPlaceholderText(_translate("MainWindow", 
+                                            "Enter password", None))
         self.label_5.setText(_translate("MainWindow", "Set Image:", None))
-        self.lineEdit_4.setPlaceholderText(_translate("MainWindow", "Image dir", None))
+        self.lineEdit_4.setPlaceholderText(_translate("MainWindow", 
+                                            "Image dir", None))
         self.pushButton_4.setText(_translate("MainWindow", "Select", None))
         self.label_6.setText(_translate("MainWindow", "Save to:", None))
-        self.lineEdit_5.setPlaceholderText(_translate("MainWindow", "Save unhiden file to", None))
+        self.lineEdit_5.setPlaceholderText(_translate("MainWindow", 
+                                            "Save unhiden file to", None))
         self.pushButton_5.setText(_translate("MainWindow", "Select", None))
-        self.commandLinkButton_2.setText(_translate("MainWindow", "Unhide!", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.unhide_tab), _translate("MainWindow", "Unhide", None))
+        self.commandLinkButton_2.setText(_translate("MainWindow", 
+                                        "Unhide!", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.unhide_tab), 
+                                 _translate("MainWindow", "Unhide", None))
         self.label_4.setText(_translate("MainWindow", "TextLabel", None))
         self.menuMenu.setTitle(_translate("MainWindow", "Menu", None))
         self.menuInfo.setTitle(_translate("MainWindow", "Info", None))
@@ -420,6 +441,24 @@ class Ui_MainWindow(object):
             unhiden.write(unhiden_file)
             unhiden.close()
 
+    #About program
+    def show_about(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("About")
+        msgBox.setIcon(QtGui.QMessageBox.Information)
+        msgBox.setText("     StegSystem    \n")
+        msgBox.setInformativeText("    Copyright   2016     "
+                                  "\nKit Y.O., Bogutskii O.")
+        msgBox.exec_()
+
+    #Center Window
+    def center_window(self):
+        resolution = QtGui.QDesktopWidget().screenGeometry()
+        my_size = MainWindow.geometry()
+        width = ( resolution.width() - my_size.width() ) / 2
+        height = ( resolution.height() - my_size.height() ) / 2
+        MainWindow.move(width, height)
+        
 
 
 if __name__ == "__main__":
