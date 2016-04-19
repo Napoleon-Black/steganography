@@ -4,6 +4,8 @@ from PIL import Image
 from itertools import product
 
 class UnhideMessage(object):
+    
+    # Unhide file from PNG image
     def unhide_message(self, imagefile):
         image = Image.open(imagefile)
         pix = image.load()

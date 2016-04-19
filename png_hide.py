@@ -5,6 +5,7 @@ from itertools import product
 
 class HideMessage(object):
 
+    # Convert file to binary file
     def bin_message(self, message):
         messagelen = len(message)
         binlen = bin(messagelen)[2:]
@@ -12,7 +13,7 @@ class HideMessage(object):
             binlen = '0' * (8 - len(binlen)) + binlen
         
         binmessage = []
-        binmessage.append(binlen)
+        binmessage.append(binlen) #add file length first
         for x in message:
             part = ''.join(format(ord(part), 'b') for part in x)
             partlen = len(part)
@@ -22,6 +23,7 @@ class HideMessage(object):
         
         return ''.join(binmessage)
 
+    #hide binary file into PNG image
     def hide_message(self, message, imagefile, outfile):
         binmessage = self.bin_message(message)
         image = Image.open(imagefile)
