@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys, crypt, png_hide, png_unhide
+import sys, re, crypt, png_hide, png_unhide
 from PIL import ImageTk, Image
 from PyQt4 import QtCore, QtGui
 
@@ -21,10 +21,10 @@ except AttributeError:
 class Ui_MainWindow(object):
 
     def __init__(self):
-        self.combobox_choice = '*.PNG'
-        self.combobox_choice2 = '*.PNG'
-        self.aes_status = False
-        self.aes_status2 = False
+        self.combobox_choice = '*.PNG' # default choice for Hide tab
+        self.combobox_choice2 = '*.PNG' # default choice for Unide tab
+        self.aes_status = False # default choice for Hide tab
+        self.aes_status2 = False # default choice for Unide tab
 
 
     def setupUi(self, MainWindow):
@@ -389,7 +389,11 @@ class Ui_MainWindow(object):
     def image_save_as(self):
         filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
                 '/home', 'PNG Files (*.png)')
-        self.new_image_file = str(filename) + '.png'
+        file_type = re.findall(r'\w\.png$|\w\.PNG$', str(filename))
+        if file_type:
+            self.new_image_file = str(filename)
+        else:
+            self.new_image_file = str(filename) + '.png'
         self.lineEdit_3.setText(self.new_image_file)
 
     #Set Image type
@@ -463,7 +467,11 @@ class Ui_MainWindow(object):
     def file_save_as(self):
         filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
                 '/home', 'Text Files (*.txt)')
-        self.new_image_file2 = str(filename) + '.txt'
+        file_type = re.findall(r'\w\.txt$|\w\.TXT$', str(filename))
+        if file_type:
+            self.new_image_file2 = str(filename)
+        else:
+            self.new_image_file2 = str(filename) + '.txt'
         self.lineEdit_5.setText(self.new_image_file2)
 
     # Unhide
@@ -491,7 +499,7 @@ class Ui_MainWindow(object):
         msgBox.setIcon(QtGui.QMessageBox.Information)
         msgBox.setText("     StegSystem    \n")
         msgBox.setInformativeText("    Copyright   2016     "
-                                  "\nKit Y.O., Bogutskii O.")
+                                  "\nKit Y., Bogutskii O.")
         msgBox.exec_()
 
     #Center Window
