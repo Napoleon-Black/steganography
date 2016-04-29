@@ -4,6 +4,7 @@ import sys, re, crypt, png_hide, png_unhide
 from PIL import ImageTk, Image
 from PyQt4 import QtCore, QtGui
 
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -31,23 +32,22 @@ class Ui_MainWindow(object):
 
         #initialize Main Window
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(400, 421)
-        MainWindow.setMinimumSize(QtCore.QSize(400, 421))
-        MainWindow.setMaximumSize(QtCore.QSize(400, 421))
-        MainWindow.setBaseSize(QtCore.QSize(400, 350))
+        MainWindow.setMinimumSize(QtCore.QSize(400, 400))
+        MainWindow.setMaximumSize(QtCore.QSize(400, 400))
         self.center_window()
 
         #add central widget
         self.centralwidget = QtGui.QWidget(MainWindow)
-        self.centralwidget.setMinimumSize(QtCore.QSize(400, 380))
-        self.centralwidget.setMaximumSize(QtCore.QSize(400, 380))
+        self.centralwidget.setGeometry(QtCore.QRect(0, 0, 400, 420))
+        self.centralwidget.setMinimumSize(QtCore.QSize(400, 420))
+        self.centralwidget.setMaximumSize(QtCore.QSize(400, 420))
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
 
         #add tab widget
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 400, 380))
-        self.tabWidget.setMinimumSize(QtCore.QSize(400, 380))
-        self.tabWidget.setMaximumSize(QtCore.QSize(400, 380))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 400, 420))
+        self.tabWidget.setMinimumSize(QtCore.QSize(400, 420))
+        self.tabWidget.setMaximumSize(QtCore.QSize(400, 420))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
 
         #initialize first tab(Hide tab)
@@ -58,6 +58,7 @@ class Ui_MainWindow(object):
         self.image_type = QtGui.QLabel(self.hide_tab)
         self.image_type.setGeometry(QtCore.QRect(35, 30, 81, 21))
         self.image_type.setObjectName(_fromUtf8("image_type"))
+
 
         #add combo box with image formats
         self.comboBox = QtGui.QComboBox(self.hide_tab)
@@ -152,6 +153,9 @@ class Ui_MainWindow(object):
         self.commandLinkButton.setObjectName(_fromUtf8("commandLinkButton"))
         self.commandLinkButton.clicked.connect(self.hide)
 
+        self.info_label = QtGui.QLabel(self.hide_tab)
+        self.info_label.setGeometry(QtCore.QRect(60, 280, 100, 40))
+
         #show first tab
         self.tabWidget.addTab(self.hide_tab, _fromUtf8(""))
 
@@ -240,12 +244,11 @@ class Ui_MainWindow(object):
         self.commandLinkButton_2.setObjectName(_fromUtf8("commandLinkButton_2"))
         self.commandLinkButton_2.clicked.connect(self.unhide)
 
+        self.info_label2 = QtGui.QLabel(self.unhide_tab)
+        self.info_label2.setGeometry(QtCore.QRect(60, 260, 100, 40))
+
         #show second tab
         self.tabWidget.addTab(self.unhide_tab, _fromUtf8(""))
-
-        self.label_4 = QtGui.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(10, 380, 46, 13))
-        self.label_4.setObjectName(_fromUtf8("label_4"))
 
         #set central widget
         MainWindow.setCentralWidget(self.centralwidget)
@@ -353,7 +356,6 @@ class Ui_MainWindow(object):
                                         "Unhide!", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.unhide_tab), 
                                  _translate("MainWindow", "Unhide", None))
-        self.label_4.setText(_translate("MainWindow", "TextLabel", None))
         self.menuMenu.setTitle(_translate("MainWindow", "Menu", None))
         self.menuInfo.setTitle(_translate("MainWindow", "Info", None))
         self.actionHide.setText(_translate("MainWindow", "Hide", None))
@@ -411,20 +413,39 @@ class Ui_MainWindow(object):
 
     # Hide
     def hide(self):
-        if self.aes_status == True:
-            hide_file = self.selected_file_str
-            set_image = self.image_container
-            save_to = self.new_image_file
-            password = self.new_password
-            crypto = crypt.Crypt()
-            crypto.file_crypt(hide_file, set_image, save_to, password)
-        else:
-            hide_file = self.selected_file_str
-            set_image = self.image_container
-            save_to = self.new_image_file
-            pnghide = png_hide.HideMessage()
-            pnghide.hide_message(hide_file, set_image, save_to)
-        self.hide_complited()
+        try:
+            if self.aes_status == True:
+                hide_file = self.selected_file_str
+                set_image = self.image_container
+                save_to = self.new_image_file
+                password = self.new_password
+                crypto = crypt.Crypt()
+                self.status('hide')
+                app.processEvents()
+                crypto.file_crypt(hide_file, set_image, save_to, password)
+                self.hide_complited()
+                self.info_label.setText('')
+            else:
+                hide_file = self.selected_file_str
+                set_image = self.image_container
+                save_to = self.new_image_file
+                pnghide = png_hide.HideMessage()
+                self.status('hide')
+                app.processEvents()
+                pnghide.hide_message(hide_file, set_image, save_to)
+                self.hide_complited()
+                self.info_label.setText('')
+        except AttributeError:
+            self.hide_attribute_error()
+
+    #show status if started hide/unhide
+    def status(self, x):
+        if x == 'hide':
+            self.info_label.setText('     Hiding... \nPlease wait.')
+        elif x == 'unhide':
+            self.info_label2.setText(' Unhiding... \nPlease wait.')
+        app.processEvents()
+
 
     # Get Password from password line
     def get_pass(self, password):
@@ -476,21 +497,32 @@ class Ui_MainWindow(object):
 
     # Unhide
     def unhide(self):
-        if self.aes_status2 == True:
-            crypt_file = self.image_container2
-            save_to = self.new_image_file2
-            password = self.new_password2
-            decrypt = crypt.Decrypt()
-            decrypt.file_decrypt(crypt_file, password, save_to)
-        else:
-            hiden_file = self.image_container2
-            save_to = self.new_image_file2
-            pngunhide = png_unhide.UnhideMessage()
-            unhiden_file = pngunhide.unhide_message(hiden_file)
-            unhiden = open(save_to, 'w')
-            unhiden.write(unhiden_file)
-            unhiden.close()
-        self.unhide_complited()
+        try:
+            if self.aes_status2 == True:
+                crypt_file = self.image_container2
+                save_to = self.new_image_file2
+                password = self.new_password2
+                decrypt = crypt.Decrypt()
+                self.status('unhide')
+                app.processEvents()
+                decrypt.file_decrypt(crypt_file, password, save_to)
+                self.unhide_complited()
+                self.info_label2.setText('')
+            else:
+                hiden_file = self.image_container2
+                save_to = self.new_image_file2
+                self.status('unhide')
+                app.processEvents()
+                pngunhide = png_unhide.UnhideMessage()
+                unhiden_file = pngunhide.unhide_message(hiden_file)
+                unhiden = open(save_to, 'w')
+                unhiden.write(unhiden_file)
+                unhiden.close()
+                self.unhide_complited()
+                self.info_label2.setText('')
+        except AttributeError:
+            self.unhide_attribute_error()
+        
 
     #About program
     def show_about(self):
@@ -500,6 +532,29 @@ class Ui_MainWindow(object):
         msgBox.setText("     StegSystem    \n")
         msgBox.setInformativeText("    Copyright   2016     "
                                   "\nKit Y., Bogutskii O.")
+        msgBox.exec_()
+
+    #Error message if attribute error
+    def hide_attribute_error(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Error!")
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setText('Error! Please verify:\n\n'
+                       '1. Image address\n'
+                       '2. File address\n'
+                       '3. Save adress\n\n'
+                       'If AES status is Enabled. Password must be entered  ')
+        msgBox.exec_()
+
+    #Error message if attribute error
+    def unhide_attribute_error(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Error!")
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setText('Error! Please verify:\n\n'
+                       '1. Image address\n'
+                       '2. Save adress\n\n'
+                       'If AES status is Enabled. Password must be entered  ')
         msgBox.exec_()
 
     #Center Window
