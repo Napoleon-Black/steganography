@@ -2,6 +2,7 @@
 
 from PIL import Image
 from itertools import product
+import random, string
 
 class UnhideMessage(object):
     
@@ -31,5 +32,7 @@ class UnhideMessage(object):
                 if lastbit=='1':
                     part += 2**i
             message.append(chr(part))
-        
-        return ''.join(message)
+        if message == []:
+            return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(500)) 
+        else:
+            return ''.join(message)

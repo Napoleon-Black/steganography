@@ -467,9 +467,11 @@ class Ui_MainWindow(object):
         self.image_container2 = str(file)
         self.lineEdit_4.setText(self.image_container2)
 
+
     #set image type
     def onActivated2(self, choice):
         self.combobox_choice2 = choice
+
 
     #set AES Encryption status (On/Off)
     def change_encrypt_status2(self, state):
@@ -480,9 +482,11 @@ class Ui_MainWindow(object):
             self.password_2.setReadOnly(True)
             self.aes_status2 = False
 
+
     #get password from password line
     def get_pass2(self, password):
         self.new_password2 = str(password)
+
 
     # Save to:
     def file_save_as(self):
@@ -494,6 +498,7 @@ class Ui_MainWindow(object):
         else:
             self.new_image_file2 = str(filename) + '.txt'
         self.lineEdit_5.setText(self.new_image_file2)
+
 
     # Unhide
     def unhide(self):
@@ -515,11 +520,18 @@ class Ui_MainWindow(object):
                 app.processEvents()
                 pngunhide = png_unhide.UnhideMessage()
                 unhiden_file = pngunhide.unhide_message(hiden_file)
-                unhiden = open(save_to, 'w')
-                unhiden.write(unhiden_file)
-                unhiden.close()
-                self.unhide_complited()
+
+                try:
+                    unhiden = open(save_to, 'w')
+                    unhiden.write(unhiden_file)
+                    unhiden.close()
+                    self.unhide_complited()
+                except IOError as folder_dir:
+                    f_dir = re.findall(r"\'(.*)\'", str(folder_dir))
+                    self.permission_denied(f_dir[0])
+
                 self.info_label2.setText('')
+
         except AttributeError:
             self.unhide_attribute_error()
         
@@ -534,6 +546,7 @@ class Ui_MainWindow(object):
                                   "\nKit Y., Bogutskii O.")
         msgBox.exec_()
 
+
     #Error message if attribute error
     def hide_attribute_error(self):
         msgBox = QtGui.QMessageBox()
@@ -546,6 +559,7 @@ class Ui_MainWindow(object):
                        'If AES status is Enabled. Password must be entered  ')
         msgBox.exec_()
 
+
     #Error message if attribute error
     def unhide_attribute_error(self):
         msgBox = QtGui.QMessageBox()
@@ -557,6 +571,16 @@ class Ui_MainWindow(object):
                        'If AES status is Enabled. Password must be entered  ')
         msgBox.exec_()
 
+
+    #Error message if permission denied to save folder
+    def permission_denied(self, f_dir):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Error! Permission denied!")
+        msgBox.setIcon(QtGui.QMessageBox.Critical)
+        msgBox.setText('Error! Permission denied to: %s! ' % f_dir)
+        msgBox.exec_()
+
+
     #Center Window
     def center_window(self):
         resolution = QtGui.QDesktopWidget().screenGeometry()
@@ -565,6 +589,7 @@ class Ui_MainWindow(object):
         height = ( resolution.height() - my_size.height() ) / 2
         MainWindow.move(width, height)
 
+
     #Message "Hide Complited" 
     def hide_complited(self):
         msgBox = QtGui.QMessageBox()
@@ -572,6 +597,7 @@ class Ui_MainWindow(object):
         msgBox.setIcon(QtGui.QMessageBox.Information)
         msgBox.setText('Hiding data complited')
         msgBox.exec_()
+
 
     #Message "Unhide Complited" 
     def unhide_complited(self):
@@ -582,7 +608,6 @@ class Ui_MainWindow(object):
         msgBox.exec_()
         
         
-
 
 if __name__ == "__main__":
     import sys
