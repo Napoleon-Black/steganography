@@ -7,7 +7,7 @@ class Crypt(object):
 
     def file_crypt(self, file_str, set_image, save_to, password):
         password = hashlib.sha256(password).digest() #password hash
-        encryption_suite = AES.new(password, AES.MODE_CFB, '0000000000000000')
+        encryption_suite = AES.new(password, AES.MODE_CFB, '^#%!8&8@4-)*Dnj0')
         crypted_file = encryption_suite.encrypt(file_str)
         import png_hide
         hide = png_hide.HideMessage()
@@ -21,7 +21,7 @@ class Decrypt(object):
         import png_unhide
         unhide = png_unhide.UnhideMessage()
         unhided_file = unhide.unhide_message(image_file)
-        decryption_suite = AES.new(password, AES.MODE_CFB, '0000000000000000')
+        decryption_suite = AES.new(password, AES.MODE_CFB, '^#%!8&8@4-)*Dnj0')
         decrypted_file = decryption_suite.decrypt(unhided_file)
         decrypted = open(save_to, 'w')
         decrypted.write(decrypted_file)
