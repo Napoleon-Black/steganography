@@ -1,9 +1,13 @@
 # steganography
 
 Requirements:  
+
 Python 2.7 - ( https://www.python.org/downloads/ )
 
-python-imaging-tk - (Ubuntu: sudo apt-get install python-imaging-tk )
+PIL  - (Ubuntu: sudo apt-get install python-imaging-tk )
+PyCrypto  -  ( pip install pycrypto )
+PyQt4    - (Ubuntu: sudo apt-get install python-qt4 )
+
 
 
 Run start.py to start the program.
