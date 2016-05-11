@@ -389,13 +389,30 @@ class Ui_MainWindow(object):
         
     # Save to
     def image_save_as(self):
-        filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
-                '/home', 'PNG Files (*.png)')
-        file_type = re.findall(r'\w\.png$|\w\.PNG$', str(filename))
-        if file_type:
-            self.new_image_file = str(filename)
-        else:
-            self.new_image_file = str(filename) + '.png'
+        if self.combobox_choice == '*.PNG':
+            filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
+                'Save as', '/home', 'PNG Files (*.png)')
+            file_type = re.findall(r'\w\.png$|\w\.PNG$', str(filename))
+            if file_type:
+                self.new_image_file = str(filename)
+            else:
+                self.new_image_file = str(filename) + '.png'
+        elif self.combobox_choice == '*.JPG':
+            filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
+                'Save as', '/home', 'JPG Files (*.jpg)')
+            file_type = re.findall(r'\w\.jpg$|\w\.JPG$', str(filename))
+            if file_type:
+                self.new_image_file = str(filename)
+            else:
+                self.new_image_file = str(filename) + '.jpg'
+        elif self.combobox_choice == '*.BMP':
+            filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
+                'Save as', '/home', 'BMP Files (*.bmp)')
+            file_type = re.findall(r'\w\.bmp$|\w\.BMP$', str(filename))
+            if file_type:
+                self.new_image_file = str(filename)
+            else:
+                self.new_image_file = str(filename) + '.bmp'
         self.lineEdit_3.setText(self.new_image_file)
 
     #Set Image type
