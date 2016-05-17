@@ -16,11 +16,11 @@ class Crypt(object):
 
 class Decrypt(object):
 
-    def file_decrypt(self, image_file, password, save_to):
+    def file_decrypt(self, image_file, password, save_to, image_type):
         password = hashlib.sha256(password).digest() #password hash
         import unhide
         unhide = unhide.UnhideMessage()
-        unhided_file = unhide.unhide_message(image_file)
+        unhided_file = unhide.unhide_message(image_file, image_type)
         decryption_suite = AES.new(password, AES.MODE_CFB, '^#%!8&8@4-)*Dnj0')
         decrypted_file = decryption_suite.decrypt(unhided_file)
         decrypted = open(save_to, 'w')

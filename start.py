@@ -435,6 +435,7 @@ class Ui_MainWindow(object):
     def open_image2(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'PNG Files (*.bmp *.png *jpg *.jpeg)')
+        self.image_file_type2 = re.findall(r'\w*(\..*)$', str(file))
         self.image_container2 = str(file)
         self.lineEdit_4.setText(self.image_container2)
 
@@ -471,19 +472,21 @@ class Ui_MainWindow(object):
                 crypt_file = self.image_container2
                 save_to = self.new_image_file2
                 password = self.new_password2
+                image_type = self.image_file_type2
                 decrypt = crypt.Decrypt()
                 self.status('unhide')
                 app.processEvents()
-                decrypt.file_decrypt(crypt_file, password, save_to)
+                decrypt.file_decrypt(crypt_file, password, save_to, image_type)
                 self.unhide_complited()
                 self.info_label2.setText('')
             elif self.combobox_choice2 == 'None':
+                image_type = self.image_file_type2
                 hiden_file = self.image_container2
                 save_to = self.new_image_file2
                 self.status('unhide')
                 app.processEvents()
                 pngunhide = unhide.UnhideMessage()
-                unhiden_file = pngunhide.unhide_message(hiden_file)
+                unhiden_file = pngunhide.unhide_message(hiden_file, image_type)
 
                 try:
                     unhiden = open(save_to, 'w')

@@ -7,16 +7,11 @@ from PIL import Image
 
 
 class UnhideMessage(object):
+       
+    def unhide_message(self, imagefile, image_type):
 
-    if image_type == '.jpg' or image_type == '.jpeg':
-        # Unhide file from JPG/JPEG image
-        def unhide_message(imagefile):
-            with exiftool.ExifTool() as et:
-                message = et.get_tag_batch('Comment', [imagefile])
-            return message
-    else:
         # Unhide file from PNG/BMP image
-        def unhide_message(self, imagefile):
+        if image_type[0].lower() == '.png' or '.bmp':
             image = Image.open(imagefile)
             pix = image.load()
             sizex, sizey = image.size
@@ -45,3 +40,10 @@ class UnhideMessage(object):
                 return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(500))
             else:
                 return ''.join(message)
+
+        # Unhide file from JPG/JPEG image
+        elif image_type[0].lower() == '.jpg' or '.jpeg':
+            with exiftool.ExifTool() as et:
+                message = et.get_tag_batch('Comment', [imagefile])
+            return message
+

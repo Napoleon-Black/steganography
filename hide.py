@@ -6,36 +6,30 @@ from PIL import Image
 
 class HideMessage(object):
 
-    if image_type == '.jpg' or image_type == '.jpeg':
-        # Hide file into JPG/JPEG image
-        def hide_message(message, imagefile):
-            with exiftool.ExifTool() as et:
-                et.execute('-Comment=' + message, imagefile)
-    else:
-        # Hide file into PNG/BMP image
-        def bin_message(self, message):
-            messagelen = len(message)
-            binlen = bin(messagelen)[2:]
-            if len(binlen) < 8:
-                binlen = '0' * (8 - len(binlen)) + binlen
+    def bin_message(self, message):
+        messagelen = len(message)
+        binlen = bin(messagelen)[2:]
+        if len(binlen) < 8:
+            binlen = '0' * (8 - len(binlen)) + binlen
 
-            binmessage = []
-            binmessage.append(binlen)
-            for x in message:
-                part = ''.join(format(ord(part), 'b') for part in x)
-                partlen = len(part)
-                if (partlen < 8):
-                    part = '0' * (8 - partlen) + part
-                binmessage.append(part)
-            return ''.join(binmessage)
+        binmessage = []
+        binmessage.append(binlen)
+        for x in message:
+            part = ''.join(format(ord(part), 'b') for part in x)
+            partlen = len(part)
+            if (partlen < 8):
+                part = '0' * (8 - partlen) + part
+            binmessage.append(part)
+        return ''.join(binmessage)
 
-        def hide_message(self, message, imagefile, outfile):
-            binmessage = self.bin_message(message)
+    def hide_message(self, message, imagefile, outfile, image_type):
+        binmessage = self.bin_message(message)
+
+        if image_type[0].lower() == '.png':
             image = Image.open(imagefile)
             pix = image.load()
             sizex, sizey = image.size
             nextindex = product(range(sizex), range(sizey))
-
 
             for m in binmessage:
                 index = next(nextindex)
@@ -53,3 +47,7 @@ class HideMessage(object):
                 pix[index] = tuple(pix_index)
 
             image.save(outfile)
+
+        elif image_type[0].lower() == '.jpg' or image_type[0].lower() == '.jpeg':
+            with exiftool.ExifTool() as et:
+                et.execute('-Comment=' + message, imagefile)
