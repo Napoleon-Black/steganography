@@ -5,13 +5,13 @@ import os, hashlib
 
 class Crypt(object):
 
-    def file_crypt(self, file_str, set_image, save_to, password):
+    def file_crypt(self, file_str, set_image, save_to, password, image_type):
         password = hashlib.sha256(password).digest() #password hash
         encryption_suite = AES.new(password, AES.MODE_CFB, '^#%!8&8@4-)*Dnj0')
         crypted_file = encryption_suite.encrypt(file_str)
         import hide
         hide = hide.HideMessage()
-        hide.hide_message(crypted_file, set_image, save_to)
+        hide.hide_message(crypted_file, set_image, save_to, image_type)
 
 
 class Decrypt(object):

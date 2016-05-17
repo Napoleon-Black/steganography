@@ -21,7 +21,8 @@ class HideMessage(object):
             binmessage.append(part)
         return ''.join(binmessage)
 
-    def hide_message(self, message, imagefile, outfile):
+    def hide_message(self, message, imagefile, outfile, image_type):
+        print image_type[0] # Формат зображення!
         binmessage = self.bin_message(message)
         image = Image.open(imagefile)
         pix = image.load()

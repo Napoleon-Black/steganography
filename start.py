@@ -392,20 +392,23 @@ class Ui_MainWindow(object):
                 set_image = self.image_container
                 save_to = self.new_image_file
                 password = self.new_password
+                image_type = self.image_file_type
                 crypto = crypt.Crypt()
                 self.status('hide')
                 app.processEvents()
-                crypto.file_crypt(hide_file, set_image, save_to, password)
+                crypto.file_crypt(hide_file, set_image, save_to, 
+                                  password, image_type)
                 self.hide_complited()
                 self.info_label.setText('')
             elif self.combobox_choice == 'None':
                 hide_file = self.selected_file_str
                 set_image = self.image_container
                 save_to = self.new_image_file
+                image_type = self.image_file_type
                 pnghide = hide.HideMessage()
                 self.status('hide')
                 app.processEvents()
-                pnghide.hide_message(hide_file, set_image, save_to)
+                pnghide.hide_message(hide_file, set_image, save_to, image_type)
                 self.hide_complited()
                 self.info_label.setText('')
             else:
