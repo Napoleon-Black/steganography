@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-import exiftool
+import pyexiv2
 from itertools import product
 from PIL import Image
 
@@ -25,8 +25,9 @@ class HideMessage(object):
     def hide_message(self, message, imagefile, outfile, image_type):
         binmessage = self.bin_message(message)
 
+        image = Image.open(imagefile)
+
         if image_type[0].lower() == '.png':
-            image = Image.open(imagefile)
             pix = image.load()
             sizex, sizey = image.size
             nextindex = product(range(sizex), range(sizey))
@@ -49,5 +50,19 @@ class HideMessage(object):
             image.save(outfile)
 
         elif image_type[0].lower() == '.jpg' or image_type[0].lower() == '.jpeg':
-            with exiftool.ExifTool() as et:
-                et.execute('-Comment=' + message, imagefile)
+            image.save(outfile, quality=100)
+
+            fix_message = []
+            for char in message:
+                part = ord(char)
+                fix_message.append(str(part))
+            fix_message = 'O'.join(fix_message)
+
+            metadata = pyexiv2.ImageMetadata(outfile)
+            metadata.read()
+
+            key = 'Exif.Photo.UserComment'
+            value = fix_message
+            metadata[key] = pyexiv2.ExifTag(key, value)
+
+            metadata.write()

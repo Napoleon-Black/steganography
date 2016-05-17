@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-import exiftool
+import pyexiv2
 import random, string
 from itertools import product
 from PIL import Image
@@ -11,7 +11,7 @@ class UnhideMessage(object):
     def unhide_message(self, imagefile, image_type):
 
         # Unhide file from PNG/BMP image
-        if image_type[0].lower() == '.png' or '.bmp':
+        if image_type[0].lower() == '.png':
             image = Image.open(imagefile)
             pix = image.load()
             sizex, sizey = image.size
@@ -43,7 +43,18 @@ class UnhideMessage(object):
 
         # Unhide file from JPG/JPEG image
         elif image_type[0].lower() == '.jpg' or '.jpeg':
-            with exiftool.ExifTool() as et:
-                message = et.get_tag_batch('Comment', [imagefile])
+
+            metadata = pyexiv2.ImageMetadata(imagefile)
+            metadata.read()
+            tag = metadata['Exif.Photo.UserComment']
+            fix_message = tag.value.encode('utf-8')
+            separate_message = fix_message.split('O')
+
+            message = []
+            for part in separate_message:
+                message.append(chr(int(part)))
+            message = ''.join(message)
+
+            print message
             return message
 
