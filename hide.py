@@ -7,11 +7,11 @@ from PIL import Image
 
 class HideMessage(object):
 
-    def bin_message(self, message):
+    def bin_message(self, message, file_name):
 
         bin_message = []
 
-        file_name = file_name[0: input_file.index('.')]
+        file_name = file_name[0: file_name.index('.')]
         name_len = len(file_name)
         bin_name_len = bin(name_len)[2:]
         if len(bin_name_len) < 8:
@@ -43,7 +43,7 @@ class HideMessage(object):
 
     def hide_message(self, message, imagefile, outfile, image_type, file_name):
 
-        binmessage = self.bin_message(message)
+        binmessage = self.bin_message(message, file_name)
         image = Image.open(imagefile)
 
         if image_type[0].lower() == '.png' or '.bmp':
