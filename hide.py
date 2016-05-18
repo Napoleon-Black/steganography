@@ -46,7 +46,7 @@ class HideMessage(object):
         binmessage = self.bin_message(message, file_name)
         image = Image.open(imagefile)
 
-        if image_type[0].lower() == '.png' or '.bmp':
+        if image_type[0].lower() == '.png' or image_type[0].lower() == '.bmp':
             pix = image.load()
             sizex, sizey = image.size
             nextindex = product(range(sizex), range(sizey))
@@ -70,6 +70,7 @@ class HideMessage(object):
 
         elif image_type[0].lower() == '.jpg' or '.jpeg':
             image.save(outfile, quality=100)
+            file_name = file_name[0: file_name.index('.')]
 
             fix = {'name': [], 'message': []}
 
@@ -93,6 +94,7 @@ class HideMessage(object):
             metadata[key] = pyexiv2.ExifTag(key, value)
 
             metadata.write()
+
 
 
 

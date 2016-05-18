@@ -13,7 +13,7 @@ class UnhideMessage(object):
     def unhide_message(self, imagefile, image_type):
 
         # Unhide file from PNG/BMP image
-        if image_type[0].lower() == '.png':
+        if image_type[0].lower() == '.png' or image_type[0].lower() == '.bmp':
             image = Image.open(imagefile)
             pix = image.load()
             sizex, sizey = image.size
@@ -95,7 +95,6 @@ class UnhideMessage(object):
                 fix['message'].append(chr(int(part)))
             fix['message'] = ''.join(fix['message'])
 
-            print fix
             return fix['name'], fix['message']
 
 
