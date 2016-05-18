@@ -94,6 +94,5 @@ class HideMessage(object):
 
             metadata.write()
 
-
-
-
+    def method(self):
+        pass
