@@ -7,56 +7,57 @@ import string
 from itertools import product
 from PIL import Image
 
-
+'''UnhideMessage class extracts hiden information from given image file and tranform it to
+"normal" decimal code string and return name and content of hiden text file'''
 class UnhideMessage(object):
-       
+
     def unhide_message(self, imagefile, image_type):
 
-        # Unhide file from PNG/BMP image
+        # Extract information from PNG/BMP image
         if image_type[0].lower() == '.png' or image_type[0].lower() == '.bmp':
             image = Image.open(imagefile)
             pix = image.load()
             sizex, sizey = image.size
             nextindex = product(range(sizex), range(sizey))
 
-            # find length of name
+            # Extract length of hiden file name
             name_len = 0
-            for i in range(7, -1, -1):
+            for unit in range(7, -1, -1):
                 index = next(nextindex)
-                b = pix[index][2]
-                lastbit = bin(b)[-1:]
+                blue = pix[index][2] # Pixel's blue point
+                lastbit = bin(blue)[-1:]
                 if lastbit == '1':
                     name_len += 2 ** i
 
-            # find name
+            # Extract hiden file name
             name = []
-            for i in range(name_len):
+            for char in range(name_len):
                 part = 0
-                for i in range(7, -1, -1):
+                for unite in range(7, -1, -1):
                     index = next(nextindex)
-                    b = pix[index][2]
-                    lastbit = bin(b)[-1:]
+                    blue = pix[index][2] # Pixel's blue point
+                    lastbit = bin(blue)[-1:]
                     if lastbit == '1':
                         part += 2 ** i
                 name.append(chr(part))
 
-            # find length of message
+            # Extract length of hiden file content
             message_len = 0
-            for i in range(7, -1, -1):
+            for unit in range(7, -1, -1):
                 index = next(nextindex)
-                b = pix[index][2]
-                lastbit = bin(b)[-1:]
+                blue = pix[index][2] # Pixel's blue point
+                lastbit = bin(blue)[-1:]
                 if lastbit == '1':
                     message_len += 2 ** i
 
-            # find message
+            # Extract hiden file content
             message = []
-            for i in range(message_len):
+            for char in range(message_len):
                 part = 0
-                for i in range(7, -1, -1):
+                for unit in range(7, -1, -1):
                     index = next(nextindex)
-                    b = pix[index][2]
-                    lastbit = bin(b)[-1:]
+                    blue = pix[index][2] # Pixel's blue point
+                    lastbit = bin(blue)[-1:]
                     if lastbit == '1':
                         part += 2 ** i
                 message.append(chr(part))
@@ -72,30 +73,31 @@ class UnhideMessage(object):
             else:
                 message = ''.join(message)
 
-            return name, message
+            return name, message # Return name and content of hiden text file
 
-        # Unhide file from JPG/JPEG image
+        # Extract information from JPG/JPEG image
         elif image_type[0].lower() == '.jpg' or '.jpeg':
 
             metadata = pyexiv2.ImageMetadata(imagefile)
             metadata.read()
             tag = metadata['Exif.Photo.UserComment']
             secret_message = tag.value.encode('utf-8')
-            separate_message = secret_message.split('OO')
+            separate_message = secret_message.split('OO') # Separate hiden file name and content
 
             fix = {'name': [], 'message': []}
 
-            uni_name = separate_message[0].split('O')
+
+            uni_name = separate_message[0].split('O') # Transform hiden file name to unicode
             for part in uni_name:
                 fix['name'].append(chr(int(part)))
-            fix['name'] = ''.join(fix['name'])
+            fix['name'] = ''.join(fix['name']) # Transform hiden file name to decimal code
 
-            uni_message = separate_message[1].split('O')
+            uni_message = separate_message[1].split('O') # Transform hiden file content to unicode
             for part in uni_message:
                 fix['message'].append(chr(int(part)))
-            fix['message'] = ''.join(fix['message'])
+            fix['message'] = ''.join(fix['message']) # Transform hiden file content to decimal code
 
-            return fix['name'], fix['message']
+            return fix['name'], fix['message'] # Return name and content of hiden text file
 
 
 
