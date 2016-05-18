@@ -1,12 +1,14 @@
 # -*- coding: utf8 -*-
 
 import pyexiv2
+
 from itertools import product
 from PIL import Image
 
 class HideMessage(object):
 
     def bin_message(self, message):
+        
         messagelen = len(message)
         binlen = bin(messagelen)[2:]
         if len(binlen) < 8:
@@ -22,9 +24,9 @@ class HideMessage(object):
             binmessage.append(part)
         return ''.join(binmessage)
 
-    def hide_message(self, message, imagefile, outfile, image_type):
-        binmessage = self.bin_message(message)
+    def hide_message(self, message, imagefile, outfile, image_type, file_name):
 
+        binmessage = self.bin_message(message)
         image = Image.open(imagefile)
 
         if image_type[0].lower() == '.png':
@@ -49,7 +51,7 @@ class HideMessage(object):
 
             image.save(outfile)
 
-        elif image_type[0].lower() == '.jpg' or image_type[0].lower() == '.jpeg':
+        elif image_type[0].lower() == '.jpg' or '.jpeg':
             image.save(outfile, quality=100)
 
             fix_message = []

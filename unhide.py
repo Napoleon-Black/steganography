@@ -1,7 +1,9 @@
 # -*- coding: utf8 -*-
 
 import pyexiv2
-import random, string
+import random
+import string
+
 from itertools import product
 from PIL import Image
 
@@ -37,7 +39,8 @@ class UnhideMessage(object):
                         part += 2**i
                 message.append(chr(part))
             if message == []:
-                return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(500))
+                return ''.join(random.SystemRandom().choice(string\
+                        .ascii_letters + string.digits) for _ in range(500))
             else:
                 return ''.join(message)
 
