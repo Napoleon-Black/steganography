@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import sys, re, crypt, hide, unhide
-from PIL import ImageTk, Image
-from PyQt4 import QtCore, QtGui
+import crypt
+import hide
+import sys
+import re
+import unhide
+
+from PIL import Image
+from PIL import ImageTk
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 
 
 try:
@@ -18,6 +25,7 @@ try:
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
 
@@ -344,6 +352,7 @@ class Ui_MainWindow(object):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Text Files (*.txt)')
         self.open_file_adress = str(file)
+        self.open_file_name = re.findall(r'.*\/(.*)$',self.open_file_adress)
         selected_file = open(str(file), 'r')
         self.selected_file_str = selected_file.read()
         self.lineEdit_2.setText(self.open_file_adress)
@@ -358,7 +367,7 @@ class Ui_MainWindow(object):
                 self.new_image_file = str(filename)
             else:
                 self.new_image_file = str(filename) + '.png'
-        elif self.image_file_type[0].lower() == '.jpg' or self.image_file_type.lower() == '.jpeg':
+        elif self.image_file_type[0].lower() == '.jpg' or '.jpeg':
             filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
                 'Save as', '/home', 'JPG Files (*.jpg)')
             file_type = re.findall(r'\w\.jpg$|\w\.JPG$', str(filename))
@@ -386,33 +395,31 @@ class Ui_MainWindow(object):
 
     # Hide
     def hide(self):
+
         try:
+            hide_file = self.selected_file_str
+            set_image = self.image_container
+            save_to = self.new_image_file
+            image_type = self.image_file_type
+            file_name = self.open_file_name
+            self.status('hide')
+            app.processEvents()
+
             if self.combobox_choice == 'AES':
-                hide_file = self.selected_file_str
-                set_image = self.image_container
-                save_to = self.new_image_file
                 password = self.new_password
-                image_type = self.image_file_type
                 crypto = crypt.Crypt()
-                self.status('hide')
-                app.processEvents()
                 crypto.file_crypt(hide_file, set_image, save_to, 
-                                  password, image_type)
-                self.hide_complited()
-                self.info_label.setText('')
+                                  password, image_type, file_name[0])
             elif self.combobox_choice == 'None':
-                hide_file = self.selected_file_str
-                set_image = self.image_container
-                save_to = self.new_image_file
-                image_type = self.image_file_type
                 pnghide = hide.HideMessage()
-                self.status('hide')
-                app.processEvents()
-                pnghide.hide_message(hide_file, set_image, save_to, image_type)
-                self.hide_complited()
-                self.info_label.setText('')
+                pnghide.hide_message(hide_file, set_image, save_to,
+                                     image_type, file_name[0])
             else:
                 print 'not yet!'
+
+            self.hide_complited()
+            self.info_label.setText('')
+
         except AttributeError:
             self.hide_attribute_error()
 
@@ -455,38 +462,30 @@ class Ui_MainWindow(object):
 
     # Save to:
     def file_save_as(self):
-        filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 'Save as',
-                '/home', 'Text Files (*.txt)')
-        file_type = re.findall(r'\w\.txt$|\w\.TXT$', str(filename))
-        if file_type:
-            self.new_image_file2 = str(filename)
-        else:
-            self.new_image_file2 = str(filename) + '.txt'
+        directory = QtGui.QFileDialog.getExistingDirectory(MainWindow, 
+                                         'Set directory to save file')
+        self.new_image_file2 = str(directory)
         self.lineEdit_5.setText(self.new_image_file2)
 
 
     # Unhide
     def unhide(self):
         try:
+            image_type = self.image_file_type2
+            save_to = self.new_image_file2
+            crypt_file = self.image_container2
+            self.status('unhide')
+            app.processEvents()
+
             if self.combobox_choice2 == 'AES':
-                crypt_file = self.image_container2
-                save_to = self.new_image_file2
                 password = self.new_password2
-                image_type = self.image_file_type2
                 decrypt = crypt.Decrypt()
-                self.status('unhide')
-                app.processEvents()
                 decrypt.file_decrypt(crypt_file, password, save_to, image_type)
                 self.unhide_complited()
                 self.info_label2.setText('')
             elif self.combobox_choice2 == 'None':
-                image_type = self.image_file_type2
-                hiden_file = self.image_container2
-                save_to = self.new_image_file2
-                self.status('unhide')
-                app.processEvents()
                 pngunhide = unhide.UnhideMessage()
-                unhiden_file = pngunhide.unhide_message(hiden_file, image_type)
+                unhiden_file = pngunhide.unhide_message(crypt_file, image_type)
 
                 try:
                     unhiden = open(save_to, 'w')
