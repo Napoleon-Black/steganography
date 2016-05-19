@@ -29,8 +29,8 @@ class Decrypt(object):
         unhide = unhide.UnhideMessage()
         unhided_file = unhide.unhide_message(image_file, image_type)
         decryption_suite = AES.new(password, AES.MODE_CFB, '^#%!8&8@4-)*Dnj0')
-        decrypted_file = decryption_suite.decrypt(unhided_file)
-        decrypted = open(save_to, 'w')
+        decrypted_file = decryption_suite.decrypt(unhided_file[1])
+        decrypted = open(save_to + '/' + unhided_file[0], 'w')
         decrypted.write(decrypted_file)
         decrypted.close()
         

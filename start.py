@@ -488,8 +488,8 @@ class Ui_MainWindow(object):
                 unhiden_file = pngunhide.unhide_message(crypt_file, image_type)
 
                 try:
-                    unhiden = open(save_to, 'w')
-                    unhiden.write(unhiden_file)
+                    unhiden = open(save_to + '/' + unhiden_file[0], 'w')
+                    unhiden.write(unhiden_file[1])
                     unhiden.close()
                     self.unhide_complited()
                 except IOError as folder_dir:

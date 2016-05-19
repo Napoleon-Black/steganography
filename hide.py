@@ -14,7 +14,6 @@ class HideMessage(object):
     def bin_message(self, message, file_name):
 
         bin_message = [] # List of total hiden info (file name and content) in binary code
-        file_name = file_name[0: file_name.index('.')]
         name_len = len(file_name)
         bin_name_len = bin(name_len)[2:]
         if len(bin_name_len) < 8:
@@ -74,8 +73,6 @@ class HideMessage(object):
 
         elif image_type[0].lower() == '.jpg' or '.jpeg':
             image.save(outfile, quality=100)
-            file_name = file_name[0: file_name.index('.')]
-
             fix = {'name': [], 'message': []}
 
             # Transform text file name and content into unicode
