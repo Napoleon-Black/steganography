@@ -348,7 +348,6 @@ class Ui_MainWindow(object):
         self.image_file_type = re.findall(r'\w*(\..*)$', str(file))
         self.image_container = str(file)
         image_x, image_y = (Image.open(self.image_container)).size
-        print self.image_file_type[0]
         if self.image_file_type[0].lower() == '.png' or \
             self.image_file_type[0].lower() == '.bmp':
             self.max_file_size = (((image_x * image_y)/8)/1000)/8
