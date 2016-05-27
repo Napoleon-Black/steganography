@@ -59,6 +59,7 @@ class HideMessage(object):
                 pix_index = list(pix[index])
                 blue = pix_index[2]
                 lastbit = bin(blue)[-1:]
+
                 if char == '0':
                     if lastbit == '1':
                         blue -= 1

@@ -3,6 +3,7 @@
 import crypt
 import hide
 import sys
+import os
 import re
 import unhide
 
@@ -34,6 +35,7 @@ class Ui_MainWindow(object):
         self.combobox_choice2 = 'None'
         self.aes_status = False # default choice for Hide tab
         self.aes_status2 = False # default choice for Unide tab
+        self.max_file_size = 1
 
 
     def setupUi(self, MainWindow):
@@ -342,9 +344,17 @@ class Ui_MainWindow(object):
     # Open image
     def open_image(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
-                '/home', 'Image Files (*.bmp *.png *jpg *.jpeg)')
+                '/home', 'Image Files (*.bmp *.png *.jpg *.jpeg)')
         self.image_file_type = re.findall(r'\w*(\..*)$', str(file))
         self.image_container = str(file)
+        image_x, image_y = (Image.open(self.image_container)).size
+        print self.image_file_type[0]
+        if self.image_file_type[0].lower() == '.png' or \
+            self.image_file_type[0].lower() == '.bmp':
+            self.max_file_size = (((image_x * image_y)/8)/1000)/8
+        else:
+            self.max_file_size = ((image_x * image_y)/8)/1000
+        self.show_max_size(self.max_file_size)
         self.lineEdit.setText(self.image_container)
 
     # Open File
@@ -352,10 +362,14 @@ class Ui_MainWindow(object):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Text Files (*.txt)')
         self.open_file_adress = str(file)
-        self.open_file_name = re.findall(r'.*\/(.*)$',self.open_file_adress)
-        selected_file = open(str(file), 'r')
-        self.selected_file_str = selected_file.read()
-        self.lineEdit_2.setText(self.open_file_adress)
+        self.file_size = (os.path.getsize(self.open_file_adress))/1000.0
+        if self.file_size > self.max_file_size:
+            self.show_large_file_warning()
+        else:
+            self.open_file_name = re.findall(r'.*\/(.*)$',self.open_file_adress)
+            selected_file = open(str(file), 'r')
+            self.selected_file_str = selected_file.read()
+            self.lineEdit_2.setText(self.open_file_adress)
         
     # Save to
     def image_save_as(self):
@@ -419,8 +433,6 @@ class Ui_MainWindow(object):
                 pnghide = hide.HideMessage()
                 pnghide.hide_message(hide_file, set_image, save_to,
                                      image_type, file_name[0])
-            else:
-                print 'not yet!'
 
             self.hide_complited()
             self.info_label.setText('')
@@ -509,8 +521,7 @@ class Ui_MainWindow(object):
                     self.permission_denied(f_dir[0])
 
                 self.info_label2.setText('')
-            else:
-                print 'not yet!'
+
         except AttributeError:
             self.unhide_attribute_error()
         
@@ -585,7 +596,22 @@ class Ui_MainWindow(object):
         msgBox.setIcon(QtGui.QMessageBox.Information)
         msgBox.setText('Unhiding data complited')
         msgBox.exec_()
-        
+
+    #Message "File is too large"
+    def show_large_file_warning(self):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Warning!")
+        msgBox.setIcon(QtGui.QMessageBox.Warning)
+        msgBox.setText('Warning! File is too large!\n')
+        msgBox.exec_()
+
+    #Show container max size
+    def show_max_size(self, size):
+        msgBox = QtGui.QMessageBox()
+        msgBox.setWindowTitle("Maximum container size")
+        msgBox.setIcon(QtGui.QMessageBox.Information)
+        msgBox.setText('In this container you can put up to: ' + str(size) + 'Kb')
+        msgBox.exec_()  
         
 
 if __name__ == "__main__":
