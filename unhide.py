@@ -38,7 +38,7 @@ class UnhideMessage(object):
                     blue = pix[index][2] # Pixel's blue point
                     lastbit = bin(blue)[-1:]
                     if lastbit == '1':
-                        part += 2 ** unite # ????????????? maybe char
+                        part += 2 ** unite
                 name.append(chr(part))
 
             # Extract length of hiden file content
@@ -59,7 +59,7 @@ class UnhideMessage(object):
                     blue = pix[index][2] # Pixel's blue point
                     lastbit = bin(blue)[-1:]
                     if lastbit == '1':
-                        part += 2 ** unit # ????????????? maybe char
+                        part += 2 ** unit
                 message.append(chr(part))
 
             if name == []:

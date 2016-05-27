@@ -410,6 +410,11 @@ class Ui_MainWindow(object):
                 crypto = crypt.Crypt()
                 crypto.file_crypt(hide_file, set_image, save_to, 
                                   password, image_type, file_name[0])
+            elif self.combobox_choice == 'Blowfish':
+                password = self.new_password
+                crypto = crypt.Crypt()
+                crypto.blowfish_file_crypt(hide_file, set_image, save_to, 
+                                  password, image_type, file_name[0])
             elif self.combobox_choice == 'None':
                 pnghide = hide.HideMessage()
                 pnghide.hide_message(hide_file, set_image, save_to,
@@ -481,6 +486,13 @@ class Ui_MainWindow(object):
                 password = self.new_password2
                 decrypt = crypt.Decrypt()
                 decrypt.file_decrypt(crypt_file, password, save_to, image_type)
+                self.unhide_complited()
+                self.info_label2.setText('')
+            elif self.combobox_choice2 == 'Blowfish':
+                password = self.new_password2
+                decrypt = crypt.Decrypt()
+                decrypt.blowfish_file_decrypt(crypt_file, password, 
+                                              save_to, image_type)
                 self.unhide_complited()
                 self.info_label2.setText('')
             elif self.combobox_choice2 == 'None':
