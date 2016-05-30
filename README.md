@@ -22,6 +22,6 @@ pyexiv2  -  (Ubuntu: sudo apt-get install python-pyexiv2).
 Run start.py to start the program.
 ----------------------------------
 
-For example:
+###For example:
 
-python start.py
+####python start.py
