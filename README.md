@@ -10,6 +10,7 @@ PIL  - (Ubuntu: sudo apt-get install python-imaging-tk )
 PyCrypto  -  ( pip install pycrypto )
 PyQt4    - (Ubuntu: sudo apt-get install python-qt4 )
 pyexiv2  -  (Ubuntu: sudo apt-get install python-pyexiv2)
+
 --------------------------------------------------------
 
 
