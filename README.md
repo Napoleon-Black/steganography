@@ -1,8 +1,8 @@
-# stegsystem
+# StegSystem
 
-Requirements:  
+###Requirements:  
 
-Python 2.7, PIL, PyCrypto, PyQt4, pyexiv2
+####Python 2.7, PIL, PyCrypto, PyQt4, pyexiv2
 
 --------------------------------------------------------
 Python 2.7 - ( https://www.python.org/downloads/ );
