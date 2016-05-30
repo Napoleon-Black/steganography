@@ -7,9 +7,10 @@ from PIL import Image
 
 
 class HideMessage(object):
-    '''HideMessage class takes image and text files then transform information about hiden file
-    and it's content in specific way to a string of code. Next insernt that string of code into
-    new image file with the name you want.'''
+    """HideMessage class takes image and text files then transform 
+    information about hiden file and it's content in specific way 
+    to a string of code. Next insernt that string of code into new 
+    image file with the name you want."""
 
     # Transform text file name and content into binary code
     def bin_message(self, message, file_name):

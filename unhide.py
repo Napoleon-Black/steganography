@@ -9,8 +9,9 @@ from PIL import Image
 
 
 class UnhideMessage(object):
-    '''UnhideMessage class extracts hiden information from given image file and tranform it to
-    "normal" decimal code string and return name and content of hiden text file'''
+    """UnhideMessage class extracts hiden information from 
+    given image file and tranform it to "normal" decimal 
+    code string and return name and content of hiden text file"""
 
     def unhide_message(self, imagefile, image_type):
 
@@ -65,13 +66,15 @@ class UnhideMessage(object):
                 message.append(chr(part))
 
             if name == []:
-                name = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
+                name = ''.join(random.SystemRandom().choice(\
+                    string.ascii_letters + string.digits) for _ in range(10))
             else:
                 name = ''.join(name)
 
             if message == []:
                 message = ''.join(
-                    random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(500))
+                    random.SystemRandom().choice(string.ascii_letters \
+                                        + string.digits) for _ in range(500))
             else:
                 message = ''.join(message)
 
@@ -100,9 +103,11 @@ class UnhideMessage(object):
 
             except KeyError:
                 fix['name'] = ''.join(
-                    random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
+                    random.SystemRandom().choice(string.ascii_letters \
+                                    + string.digits) for _ in range(10))
                 fix['message'] = ''.join(
-                    random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(500))
+                    random.SystemRandom().choice(string.ascii_letters \
+                                    + string.digits) for _ in range(500))
 
             return fix['name'], fix['message'] # Return name and content of hiden text file
 

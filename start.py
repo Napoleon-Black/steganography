@@ -359,7 +359,7 @@ class Ui_MainWindow(object):
     # Open File
     def open_file(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
-                '/home', 'Text Files (*.txt)')
+                '/home', 'Text Files (*.txt *.rtf *.doc *.docx)')
         self.open_file_adress = str(file)
         self.file_size = (os.path.getsize(self.open_file_adress))/1000.0
         if self.file_size > self.max_file_size:
@@ -372,30 +372,40 @@ class Ui_MainWindow(object):
         
     # Save to
     def image_save_as(self):
+
         if self.image_file_type[0].lower() == '.png':
+
             filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
                 'Save as', '/home', 'PNG Files (*.png)')
             file_type = re.findall(r'\w\.png$|\w\.PNG$', str(filename))
+
             if file_type:
                 self.new_image_file = str(filename)
             else:
                 self.new_image_file = str(filename) + '.png'
-        elif self.image_file_type[0].lower() == '.jpg' or '.jpeg':
+
+        elif self.image_file_type[0].lower() == '.jpg' \
+                        or self.image_file_type[0].lower() == '.jpeg':
+
             filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
-                'Save as', '/home', 'JPG Files (*.jpg)')
+                        'Save as', '/home', 'JPG Files (*.jpg)')
             file_type = re.findall(r'\w\.jpg$|\w\.JPG$', str(filename))
+
             if file_type:
                 self.new_image_file = str(filename)
             else:
                 self.new_image_file = str(filename) + '.jpg'
+
         elif self.image_file_type[0].lower() == '.bmp':
             filename = QtGui.QFileDialog.getSaveFileName(self.hide_tab, 
                 'Save as', '/home', 'BMP Files (*.bmp)')
             file_type = re.findall(r'\w\.bmp$|\w\.BMP$', str(filename))
+
             if file_type:
                 self.new_image_file = str(filename)
             else:
                 self.new_image_file = str(filename) + '.bmp'
+                
         self.lineEdit_3.setText(self.new_image_file)
 
     def onActivated(self, choice):
@@ -457,7 +467,7 @@ class Ui_MainWindow(object):
     #open image
     def open_image2(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
-                '/home', 'PNG Files (*.bmp *.png *jpg *.jpeg)')
+                '/home', 'Image Files (*.bmp *.png *.jpg *.jpeg)')
         self.image_file_type2 = re.findall(r'\w*(\..*)$', str(file))
         self.image_container2 = str(file)
         self.lineEdit_4.setText(self.image_container2)
