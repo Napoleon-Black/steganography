@@ -36,6 +36,8 @@ class Ui_MainWindow(object):
         self.aes_status = False # default choice for Hide tab
         self.aes_status2 = False # default choice for Unide tab
         self.max_file_size = 1
+        self.image_file_type = 'None'
+        self.new_image_file = None
 
 
     def setupUi(self, MainWindow):
@@ -345,30 +347,32 @@ class Ui_MainWindow(object):
     def open_image(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Image Files (*.bmp *.png *.jpg *.jpeg)')
-        self.image_file_type = re.findall(r'\w*(\..*)$', str(file))
-        self.image_container = str(file)
-        image_x, image_y = (Image.open(self.image_container)).size
-        if self.image_file_type[0].lower() == '.png' or \
-            self.image_file_type[0].lower() == '.bmp':
-            self.max_file_size = (((image_x * image_y)/8)/1000)/8
-        else:
-            self.max_file_size = ((image_x * image_y)/8)/1000
-        self.show_max_size(self.max_file_size)
-        self.lineEdit.setText(self.image_container)
+        if file:
+            self.image_file_type = re.findall(r'\w*(\..*)$', str(file))
+            self.image_container = str(file)
+            image_x, image_y = (Image.open(self.image_container)).size
+            if self.image_file_type[0].lower() == '.png' or \
+                self.image_file_type[0].lower() == '.bmp':
+                self.max_file_size = (((image_x * image_y)/8)/1000)/8
+            else:
+                self.max_file_size = ((image_x * image_y)/8)/1000
+            self.show_max_size(self.max_file_size)
+            self.lineEdit.setText(self.image_container)
 
     # Open File
     def open_file(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Text Files (*.txt *.rtf *.doc *.docx)')
-        self.open_file_adress = str(file)
-        self.file_size = (os.path.getsize(self.open_file_adress))/1000.0
-        if self.file_size > self.max_file_size:
-            self.show_large_file_warning()
-        else:
-            self.open_file_name = re.findall(r'.*\/(.*)$',self.open_file_adress)
-            selected_file = open(str(file), 'r')
-            self.selected_file_str = selected_file.read()
-            self.lineEdit_2.setText(self.open_file_adress)
+        if file:
+            self.open_file_adress = str(file)
+            self.file_size = (os.path.getsize(self.open_file_adress))/1000.0
+            if self.file_size > self.max_file_size:
+                self.show_large_file_warning()
+            else:
+                self.open_file_name = re.findall(r'.*\/(.*)$',self.open_file_adress)
+                selected_file = open(str(file), 'r')
+                self.selected_file_str = selected_file.read()
+                self.lineEdit_2.setText(self.open_file_adress)
         
     # Save to
     def image_save_as(self):
@@ -405,8 +409,9 @@ class Ui_MainWindow(object):
                 self.new_image_file = str(filename)
             else:
                 self.new_image_file = str(filename) + '.bmp'
-                
-        self.lineEdit_3.setText(self.new_image_file)
+        
+        if self.new_image_file:                
+            self.lineEdit_3.setText(self.new_image_file)
 
     def onActivated(self, choice):
         self.combobox_choice = choice
@@ -468,9 +473,10 @@ class Ui_MainWindow(object):
     def open_image2(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Image Files (*.bmp *.png *.jpg *.jpeg)')
-        self.image_file_type2 = re.findall(r'\w*(\..*)$', str(file))
-        self.image_container2 = str(file)
-        self.lineEdit_4.setText(self.image_container2)
+        if file:
+            self.image_file_type2 = re.findall(r'\w*(\..*)$', str(file))
+            self.image_container2 = str(file)
+            self.lineEdit_4.setText(self.image_container2)
 
 
     def onActivated2(self, choice):
