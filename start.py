@@ -347,9 +347,10 @@ class Ui_MainWindow(object):
     def open_image(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Image Files (*.bmp *.png *.jpg *.jpeg)')
+        file = unicode(file)
         if file:
-            self.image_file_type = re.findall(r'\w*(\..*)$', str(file))
-            self.image_container = str(file)
+            self.image_file_type = re.findall(r'\w*(\..*)$', file)
+            self.image_container = file
             image_x, image_y = (Image.open(self.image_container)).size
             if self.image_file_type[0].lower() == '.png' or \
                 self.image_file_type[0].lower() == '.bmp':
@@ -363,14 +364,15 @@ class Ui_MainWindow(object):
     def open_file(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Text Files (*.txt *.rtf *.doc *.docx)')
+        file = unicode(file)
         if file:
-            self.open_file_adress = str(file)
+            self.open_file_adress = file
             self.file_size = (os.path.getsize(self.open_file_adress))/1000.0
             if self.file_size > self.max_file_size:
                 self.show_large_file_warning()
             else:
                 self.open_file_name = re.findall(r'.*\/(.*)$',self.open_file_adress)
-                selected_file = open(str(file), 'r')
+                selected_file = open(file, 'r')
                 self.selected_file_str = selected_file.read()
                 self.lineEdit_2.setText(self.open_file_adress)
         
@@ -473,9 +475,10 @@ class Ui_MainWindow(object):
     def open_image2(self):
         file = QtGui.QFileDialog.getOpenFileName(self.hide_tab, 'Open file', 
                 '/home', 'Image Files (*.bmp *.png *.jpg *.jpeg)')
+        file = unicode(file)
         if file:
-            self.image_file_type2 = re.findall(r'\w*(\..*)$', str(file))
-            self.image_container2 = str(file)
+            self.image_file_type2 = re.findall(r'\w*(\..*)$', file)
+            self.image_container2 = file
             self.lineEdit_4.setText(self.image_container2)
 
 
