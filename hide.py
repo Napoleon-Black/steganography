@@ -31,8 +31,8 @@ class HideMessage(object):
 
         message_len = len(message)
         bin_message_len = bin(message_len)[2:]
-        if len(bin_message_len) < 8:
-            bin_message_len = '0' * (8 - len(bin_message_len)) + bin_message_len
+        if len(bin_message_len) < 15:
+            bin_message_len = '0' * (15 - len(bin_message_len)) + bin_message_len
         bin_message.append(bin_message_len)
 
         for char in message:

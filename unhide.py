@@ -46,7 +46,7 @@ class UnhideMessage(object):
 
             # Extract length of hiden file content
             message_len = 0
-            for unit in range(7, -1, -1):
+            for unit in range(14, -1, -1):
                 index = next(nextindex)
                 blue = pix[index][2] # Pixel's blue point
                 lastbit = bin(blue)[-1:]
